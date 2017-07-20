@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import Homepage from './Homepage'
+import uuidV4  from 'uuidv4'
 
 import { setUser } from '../actions/users'
+import { createRoom } from '../actions/rooms'
 
 class Login extends React.Component {
   constructor() {
@@ -16,9 +18,15 @@ class Login extends React.Component {
 
   submitRoom(e) {
     e.preventDefault()
-    console.log(this.state.username)
+    console.log(this.state.roomName)
     if(this.state.roomName === '' || this.state.roomName === ' ' ) return 
-    this.props.createRoom(this.state.roomName)
+    const room = {
+      name: this.state.roomName,
+      id: uuidV4() 
+    }
+    this.props.createRoom(room)
+    console.log('roomupdate', this.props.room)
+    this.props.socket.emit('makeRoom', room)
     this.setState({roomName: '', proceed: true})
   }
 
@@ -29,25 +37,26 @@ class Login extends React.Component {
   }
 
   render () {
-    const proceed = (this.state.proceed) ? <Link to={`/rooms/${roomName}`}><button>Proceed</button></Link> : <div></div>
+    const proceed = (this.state.proceed) ? <Link to={`/rooms/${this.props.room.id}`}><button>Proceed</button></Link> : <div></div>
     return (
       <form>
-          <input type="text" onChange={this.handleChange.bind(this)} placeholder="Username"
-            value={this.state.username}/>
-          <button onClick={this.submitUser.bind(this)}>Submit</button>
+          <input type="text" onChange={this.handleChange.bind(this)} placeholder="RoomName"
+            value={this.state.roomName}/>
+          <button onClick={this.submitRoom.bind(this)}>New Room</button>
           {proceed}
       </form>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({createRoom: createRoom}, dispatch)
 }
 
 function mapStateToProps(state) {
+  console.log('ROOM',state)
   return {room: state.room}
 }
 

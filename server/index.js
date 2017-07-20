@@ -17,33 +17,7 @@ io.on('connection', function(socket) {
   })
 
   socket.on(users[0].id, function(data) {
-    users[0].cursor = data.cursor
-    for (let i = 0; i < users.length; i++) {
-      for(let j = 0; j < users.length; j++) {
-        if(users[i].cursor.row === users[j].cursor.row && i !== j) {
-          return
-        }
-      }
-    }
-    code = data.code
-    console.log('1: ', 'user1: ', data.cursor, 'user2: ', users[1].cursor)
-
-    io.sockets.emit('update', code)
-  })
-
-  if(users.length > 1){
-    socket.on(users[1].id, function(data) {
-      users[1].cursor = data.cursor
-      for (let i = 0; i < users.length; i++) {
-       for(let j = 0; j < users.length; j++) {
-         if(users[i].cursor.row === users[j].cursor.row && i !== j) {
-           return
-         }
-       }
-     }
-     console.log('2: ', 'user1: ', users[0].cursor, 'user2: ', data.cursor)
-     code = data.code
-     io.sockets.emit('update', code)
+    io.sockets.emit('update', data
    })
   }
 })
