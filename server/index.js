@@ -4,6 +4,7 @@ var io = require('socket.io')(http)
 
 var code = ""
 var users = []
+var rooms = []
 
 
 io.on('connection', function(socket) {
