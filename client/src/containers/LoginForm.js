@@ -17,10 +17,10 @@ class Login extends React.Component {
 
   submitUser(e) {
     e.preventDefault()
-    console.log(this.state.username)
     if(this.state.username === '' || this.state.username === ' ' ) return 
     this.props.setUser(this.state.username)
     this.setState({username: '', proceed: true})
+    this.props.history.push('/home')
   }
 
   handleChange(e) {
@@ -36,7 +36,6 @@ class Login extends React.Component {
           <input type="text" onChange={this.handleChange.bind(this)} placeholder="Username"
             value={this.state.username}/>
           <button onClick={this.submitUser.bind(this)}>Submit</button>
-          {proceed}
       </form>
     )
   }

@@ -14,12 +14,9 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
 
-import io from 'socket.io-client'
-const socket = io('http://192.168.5.178:3000')
-
 class Editor extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       code: '',
       readOnly: false,
@@ -29,7 +26,10 @@ class Editor extends React.Component {
 
   handleChange = (code) => {
     let cursor = this.refs.ace.editor.selection.getCursor()
-    socket.emit(socket.id, {code: code, cursor: cursor} )
+    this.props.socket.emit('codeUpdate', {
+    room: this.props.roomid,
+    code: code
+  })   
   }
 
   update(data) {
@@ -38,12 +38,11 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('connect', () => {
-      console.log('client connected')
+    this.props.socket.on('connect', () => {
     })
-    socket.on('update', (data) => this.update(data))
+    this.props.socket.on('codeUpdate', (data) => this.update(data))
 
-    socket.on('e', (data) => console.alert(data))
+    this.props.socket.on('e', (data) => console.alert(data))
   }
 
   render () {

@@ -25,7 +25,6 @@ class Login extends React.Component {
       id: uuidV4() 
     }
     this.props.createRoom(room)
-    console.log('roomupdate', this.props.room)
     this.props.socket.emit('makeRoom', room)
     this.setState({roomName: '', proceed: true})
   }
@@ -37,13 +36,11 @@ class Login extends React.Component {
   }
 
   render () {
-    const proceed = (this.state.proceed) ? <Link to={`/rooms/${this.props.room.id}`}><button>Proceed</button></Link> : <div></div>
     return (
       <form>
           <input type="text" onChange={this.handleChange.bind(this)} placeholder="RoomName"
             value={this.state.roomName}/>
           <button onClick={this.submitRoom.bind(this)}>New Room</button>
-          {proceed}
       </form>
     )
   }
@@ -56,7 +53,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log('ROOM',state)
   return {room: state.room}
 }
 

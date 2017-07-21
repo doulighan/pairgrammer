@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Route } from 'react-router-dom'
-import Editor from './Editor'
+import { Route, Switch } from 'react-router-dom'
+import { loadRooms } from '../actions/rooms'
+import Room from './Room'
+import Navbar from '../components/Navbar'
 import RoomForm from './RoomForm'
 import io from 'socket.io-client'
 
@@ -13,12 +15,15 @@ class Homepage extends React.Component {
     super()
     this.state = {
       rooms: [],
-      currentRoom: []
+      user: {}
     }
   }
 
-  componentDidMount() {
-
+  componentWillMount() {
+    socket.emit('requestRooms', 'hello')
+    socket.on('requestRooms', (data) => {
+      this.props.loadRooms(data)
+    })
   }
 
 
@@ -26,18 +31,31 @@ class Homepage extends React.Component {
     return (
       <div>
         <h2>Welcome, {this.props.user.username} </h2>
-        <RoomForm socket={socket}/>
+        <Navbar rooms={this.props.rooms} />
+          <Switch>
+            <Route path='/home/rooms/:roomid' render={p=>{return(<Room {...p} socket={socket} />)}} />
+            <Route path='/home' render={p => { return (<RoomForm {...p} socket={socket} /> )}} />
+          </Switch>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps)(Homepage)
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({loadRooms: loadRooms}, dispatch)
+}
 
 function mapStateToProps(state) {
-  console.log(state)
-  return {user: state.user}
+  return {
+    rooms: state.rooms,
+    user: state.user    
+  }
 }
+
+
+
 
 
 
