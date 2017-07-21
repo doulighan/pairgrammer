@@ -1,10 +1,11 @@
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
+var ot = require('operational-transformation')
 
 var code = ""
 var users = []
-var rooms = [{name: 'test', id: '1'}]
+var rooms = [{name: 'test', id: '1', code: ''}]
 
 
 io.on('connection', function(socket) {
@@ -22,9 +23,8 @@ io.on('connection', function(socket) {
    })
 
   socket.on('joinRoom', function(id) {
-    var room = rooms.find(function(r) {
-      return r.id == id
-    })
+    var room = getRoom(id, rooms)
+    console.log(room)
     socket.join(id)
     socket.emit('sendRoom', room)
   })
@@ -35,12 +35,10 @@ io.on('connection', function(socket) {
   })
 
   socket.on('codeUpdate', function(data) {
-    console.log('incomingdata: ', data)
      socket.broadcast.to(data.room).emit('codeUpdate',   
   data.code)})
 
   socket.on('requestRooms', function(data) {
-    console.log('requeted rooms:', rooms)
     socket.emit('requestRooms', rooms)
   })
 })
@@ -48,6 +46,10 @@ io.on('connection', function(socket) {
 http.listen(3000, function(){
   console.log('listening on *:3000')
 })
+
+var getRoom = (id, rooms) => {
+  return rooms.find( r => id === r.id)
+}
 
 
 

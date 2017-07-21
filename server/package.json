@@ -2,6 +2,7 @@
   "dependencies": {
     "express": "^4.15.3",
     "nodemon": "^1.11.0",
+    "operational-transformation": "^0.0.7",
     "socket.io": "^2.0.3"
   }
 }
