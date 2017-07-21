@@ -4,10 +4,12 @@ var io = require('socket.io')(http)
 
 var code = ""
 var users = []
-var rooms = [{name: 'test', id: '1'}]
+var rooms = [{name: 'testroom', id: '1'}]
 
 
 io.on('connection', function(socket) {
+
+
   users.push(socket)
   console.log('connected: ' + socket.id)
   console.log('numUsers: ' + users.length)

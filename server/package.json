@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "express": "^4.15.3",
+    "livedb": "^0.5.13",
     "nodemon": "^1.11.0",
+    "share": "^0.7.40",
+    "sharedb": "^1.0.0-beta.7",
     "socket.io": "^2.0.3"
   }
 }
