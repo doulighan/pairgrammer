@@ -15,34 +15,34 @@ import 'brace/theme/monokai';
 
 
 class Editor extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    console.log(props.room)
     this.state = {
-      code: '',
+      room: props.room,
       readOnly: false,
       mode: 'javascript'
     }
   }
 
   handleChange = (code) => {
+    console.log('handlechange:', code)
     let cursor = this.refs.ace.editor.selection.getCursor()
     this.props.socket.emit('codeUpdate', {
-    room: this.props.roomid,
+    room: this.props.room.id,
     code: code
   })   
   }
 
   update(data) {
-    console.log(data)
-    this.setState({ code: data })
+    console.log('data in:', data)
+    this.setState({ 
+      room: {...this.state.room, code: data}
+    })
   }
 
   componentDidMount() {
-    this.props.socket.on('connect', () => {
-    })
     this.props.socket.on('codeUpdate', (data) => this.update(data))
-
-    this.props.socket.on('e', (data) => console.alert(data))
   }
 
   render () {
@@ -53,7 +53,7 @@ class Editor extends React.Component {
          theme="monokai"
          ref="ace"
          onChange={this.handleChange}
-         value={this.state.code}
+         value={this.state.room.code}
          name="UNIQUE_ID_OF_DIV"
          editorProps={{$blockScrolling: true}}
        />

@@ -6,18 +6,23 @@ import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 class Navbar extends React.Component {
   constructor(props) {
     super(props)
+    console.log(props)
   }
 
   render () {
-    console.log(this.props)
+    const rooms = []
+    for (var id in this.props.rooms) {
+       var room = this.props.rooms[id];
+        rooms.push(room)
+    }
     return ( 
       <div>
         <ul>
-          {this.props.rooms.map(room =>
+          {rooms.map(room =>
             <li>
-              <Link key={room.id} to={`/home/rooms/${room.id}`}>
+              <NavLink key={room.id} to={`/home/rooms/${room.id}`}>
                 {room.name}
-              </Link>
+              </NavLink>
             </li>
           )} 
         </ul>

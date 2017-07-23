@@ -1,40 +1,58 @@
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
-var ot = require('operational-transformation')
+var Room = require('./room.js')
+var Person = require('./person.js')
 
-var code = ""
-var users = []
-var rooms = [{name: 'test', id: '1', code: ''}]
+var people = {}
+var rooms = {}
+var sockets = []
+var chatHistory = {}
 
+
+// people[socket.id] = {"name" : name, "owns" : ownerRoomID, "inroom": inRoomID, "device": device};
+rooms[1] = new Room('test', 1)
+rooms['abc'] = new Room('another test', 'abc')
 
 io.on('connection', function(socket) {
-  users.push(socket)
   console.log('connected: ' + socket.id)
-  console.log('numUsers: ' + users.length)
+
+  socket.on('addPerson', function(data) {
+    var person = new Person(data.username, data.id)
+    people[socket.id] = person
+    console.log(people)
+  })
 
   socket.on('disconnect', function() {
-    var i = users.indexOf(socket)
-    users.splice(i, 1)
+    people[socket.id] = null
   })
 
   socket.on('makeRoom', function(data) {
-    rooms.indexOf(data) === -1 ? rooms.push(data) : console.log('room alreadt exists')
+    console.log('made room')
+    if(!rooms[data.id]) {
+      var room = new Room(data.name, data.id)
+      room.addPerson(people[socket.id])
+      rooms[data.id] = room
+    }
    })
 
   socket.on('joinRoom', function(id) {
-    var room = getRoom(id, rooms)
-    console.log(room)
-    socket.join(id)
+    console.log('joined room')
+    var room = rooms[id]
+    room.addPerson(people[socket.id])
+    socket.join(room.id)
     socket.emit('sendRoom', room)
   })
 
   socket.on('leaveRoom', function(data) {
     console.log(socket.id, 'left room')
+    var room = rooms[data]
+    room.removePerson(people[socket.id])
     socket.leave(data)
   })
 
   socket.on('codeUpdate', function(data) {
+     console.log('data in:', data)
      socket.broadcast.to(data.room).emit('codeUpdate',   
   data.code)})
 
