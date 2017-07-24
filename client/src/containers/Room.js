@@ -1,41 +1,59 @@
 import React from 'react';  
 import {connect} from 'react-redux';  
 import {bindActionCreators} from 'redux';
+import { getCurrentRoom } from '../actions/rooms'
 import Editor from './Editor'
+import Delay from 'react-delay'
 
 
 class Room extends React.Component {  
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      roomid: props.match.params.roomid,
-      room: {}
+      room: {},
     }
   }
   
   componentDidMount() {
-    this.props.socket.emit('joinRoom', this.state.roomid )
+    this.props.socket.emit('joinRoom', this.props.match.params.roomid )
     this.props.socket.on('sendRoom', (room) => this.setState({room: room}))
   }
 
   componentWillUnmount() {
-    this.props.socket.emit('leaveRoom', this.state.roomid)
+    this.props.socket.emit('leaveRoom', this.state.room.id)
   }
 
   render() {
-    var editor = (this.state.room) ? <Editor socket={this.props.socket} roomid={this.state.roomid} /> : <p>loading</p>
+    var peopleList = ''
+    if(this.state.room.people){
+      peopleList = this.state.room.people.map(p => {
+        if(p){
+          return <li>{p.username}</li>
+        }
+      })
+    }
     return (
       <div>
-        <h1>{this.state.room.name}</h1>
-        {editor}
+        <Delay wait={1000}>
+          <div>
+            <h1>{this.state.room.name}</h1>
+            <Editor socket={this.props.socket} room={this.state.room} />
+            <h4>Currently in room:</h4>
+            <ul>{peopleList}</ul>
+          </div>
+        </Delay>
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {rooms: state.rooms}
+  return {
+    rooms: state.rooms,
+    user: state.user    
+  }
 }
 
-
 export default connect(mapStateToProps, null)(Room)
+
+

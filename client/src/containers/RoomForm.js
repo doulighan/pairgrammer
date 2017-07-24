@@ -22,7 +22,8 @@ class Login extends React.Component {
     if(this.state.roomName === '' || this.state.roomName === ' ' ) return 
     const room = {
       name: this.state.roomName,
-      id: uuidV4() 
+      id: uuidV4(), 
+      code: '' 
     }
     this.props.createRoom(room)
     this.props.socket.emit('makeRoom', room)

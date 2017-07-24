@@ -26,6 +26,10 @@ class Homepage extends React.Component {
     })
   }
 
+  componentDidMount() {    
+    socket.emit('addPerson', this.props.user)
+  }
+
 
   render () {
     return (
