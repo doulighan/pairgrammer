@@ -1,14 +1,12 @@
 {
   "dependencies": {
     "express": "^4.15.3",
-    "livedb": "^0.5.13",
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.11.4",
     "nodemon": "^1.11.0",
-<<<<<<< HEAD
+    "operational-transformation": "^0.0.7",
     "share": "^0.7.40",
     "sharedb": "^1.0.0-beta.7",
-=======
-    "operational-transformation": "^0.0.7",
->>>>>>> op-transf
     "socket.io": "^2.0.3"
   }
 }

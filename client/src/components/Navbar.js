@@ -10,17 +10,12 @@ class Navbar extends React.Component {
   }
 
   render () {
-    const rooms = []
-    for (var id in this.props.rooms) {
-       var room = this.props.rooms[id];
-        rooms.push(room)
-    }
     return ( 
       <div>
         <ul>
-          {rooms.map(room =>
+          {this.props.rooms.map(room =>
             <li>
-              <NavLink key={room.id} to={`/home/rooms/${room.id}`}>
+              <NavLink key={room._id} to={`/home/rooms/${room._id}`}>
                 {room.name}
               </NavLink>
             </li>

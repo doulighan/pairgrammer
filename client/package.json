@@ -16,6 +16,9 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
     "save": "^2.3.1",
+    "semantic-ui": "^2.2.11",
+    "semantic-ui-css": "^2.2.11",
+    "semantic-ui-react": "^0.71.1",
     "share": "^0.7.40",
     "socket.io-client": "^2.0.3",
     "uuidv4": "^0.5.0"

@@ -1,55 +1,140 @@
 var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
+var mongoose = require('mongoose')
+var ObjectId = require('mongoose').Types.ObjectId;
 
-var code = ""
-var users = []
-var rooms = [{name: 'testroom', id: '1'}]
+const Room = require('./models/Room.js')
+const User = require('./models/User.js')
+const Message = require('./models/Message.js')
 
 
-io.on('connection', function(socket) {
-
-
-  users.push(socket)
+io.on('connection', (socket) => {
   console.log('connected: ' + socket.id)
-  console.log('numUsers: ' + users.length)
 
-  socket.on('disconnect', function() {
-    var i = users.indexOf(socket)
-    users.splice(i, 1)
+  socket.on('addPerson', (data) => {
+    addPerson(data, socket)
   })
 
-  socket.on('makeRoom', function(data) {
-    rooms.indexOf(data) === -1 ? rooms.push(data) : console.log('room alreadt exists')
+  socket.on('disconnect', () => {
+    console.log('usersocket left: ', socket.id)
+  })
+
+  socket.on('makeRoom', (data) => {
+    makeRoom(data, socket)
    })
-
-  socket.on('joinRoom', function(id) {
-    var room = rooms.find(function(r) {
-      return r.id == id
-    })
-    socket.join(id)
-    socket.emit('sendRoom', room)
+  socket.on('joinRoom', (id) => {
+    joinRoom(id, socket)
+  })
+  socket.on('leaveRoom', (roomid) => {
+    leaveRoom(roomid, socket)
   })
 
-  socket.on('leaveRoom', function(data) {
-    console.log(socket.id, 'left room')
-    socket.leave(data)
+  socket.on('codeUpdate', (data) => {
+    codeUpdate(data, socket)
   })
 
-  socket.on('codeUpdate', function(data) {
-    console.log('incomingdata: ', data)
-     socket.broadcast.to(data.room).emit('codeUpdate',   
-  data.code)})
+  socket.on('requestRooms', (data) => {
+    sendRooms()
+  })
 
-  socket.on('requestRooms', function(data) {
-    console.log('requeted rooms:', rooms)
-    socket.emit('requestRooms', rooms)
+  socket.on('chat', (data) => {
+    console.log(data)
+    chat(data, socket)
   })
 })
+
+mongoose.connect('mongodb://localhost/db')
 
 http.listen(3000, function(){
   console.log('listening on *:3000')
 })
+
+//////////////////////////////////////////////////////////////////
+function chat(data, socket) {
+  var message = new Message({user: {name: data.message.user.name, socketID: socket.id}, 
+    body: data.message.body
+  })
+  Room.findOne({_id: data.room}, (err, room) => {
+    message.markModified('message')
+    room.messages.push(message)
+    room.save()
+    console.log(room)
+  })
+  io.sockets.to(data.room).emit('chat', message)
+}
+
+function addPerson(data, socket) {
+  var user = new User({username: data.username, _id: data.id, socketID: socket.id})
+  user.save((err) => {
+    if(err) return (err) => console.log(error)
+    console.log('user saved!')
+  })
+}
+
+function makeRoom(data, socket) {
+  var room = new Room({name: data.name, _id: data.id, code: '', users: []})
+  room.save((err) => {
+    if(err) return handleError(err)
+    console.log('room saved!')
+    sendRooms()
+  })
+}
+
+function sendRooms() {
+  Room.find({}, (err, res) => {
+    io.sockets.emit('requestRooms', res)
+  })
+}
+
+function addUserToRoom(user, roomid) {
+  Room.findOne({_id: roomid}, (err, room) => {
+    if(user == null || room == null) {return 'null room/user'}
+    user.markModified('user')
+    room.users.push(user)
+    room.save()
+    sendRoom(room)
+  })
+}
+
+function removeUserFromRoom(user, roomid) {
+  Room.findOne({_id: roomid}, (err, room) => {
+    user.markModified('user')
+    room.users.pull(user)
+    room.save()
+    sendRoom(room)
+  })
+}
+
+function sendRoom(room) {
+  io.sockets.in(room._id).emit('sendRoom', room)
+}
+
+function joinRoom(id, socket) {
+  console.log('joined room')
+  User.findOne({socketID: socket.id}, (err, res) => {
+    addUserToRoom(res, id)
+  })
+  socket.join(id)
+}
+
+function leaveRoom(roomid, socket) {
+  console.log(socket.id, 'left room')
+  User.findOne({socketID: socket.id}, (err, user) => {
+    removeUserFromRoom(user, roomid)
+  })
+  socket.leave(roomid)
+}
+
+function codeUpdate(data, socket) {
+  console.log('data in:', data)
+  Room.findOne({_id: data.id}, (err, room) => {
+    room.code = data.code
+    room.save()
+    io.sockets.to(room._id).emit('codeUpdate', room.code)
+  })
+}
+
 
 
 

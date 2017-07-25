@@ -1,3 +1,4 @@
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import CodeMirror from 'react-codemirror'
@@ -28,8 +29,9 @@ class Editor extends React.Component {
   handleChange = (code) => {
     console.log('handlechange:', code)
     let cursor = this.refs.ace.editor.selection.getCursor()
+    console.log(this.props.room)
     this.props.socket.emit('codeUpdate', {
-    room: this.props.room.id,
+    id: this.props.room._id,
     code: code
   })   
   }
@@ -50,7 +52,10 @@ class Editor extends React.Component {
     return (  
       <AceEditor
          mode="javascript"
-         theme="monokai"
+         height='800px'
+         width='800px'
+         fontSize='18'
+         theme='monokai'
          ref="ace"
          onChange={this.handleChange}
          value={this.state.room.code}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import Homepage from './Homepage'
-import uuidV4  from 'uuidv4'
+import uuid  from 'uuidv4'
 
 import { setUser } from '../actions/users'
 import { createRoom } from '../actions/rooms'
@@ -22,7 +22,7 @@ class Login extends React.Component {
     if(this.state.roomName === '' || this.state.roomName === ' ' ) return 
     const room = {
       name: this.state.roomName,
-      id: uuidV4(), 
+      id: uuid(), 
       code: '' 
     }
     this.props.createRoom(room)

@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import Homepage from './Homepage'
+import { Header, Icon, Image, Segment, Button, Divider, Form, Input, Grid, Container } from 'semantic-ui-react'
+
 
 import { setUser } from '../actions/users'
 
@@ -11,7 +13,6 @@ class Login extends React.Component {
     super()
     this.state = {
       username: '',
-      proceed: false
     }
   }
 
@@ -19,7 +20,7 @@ class Login extends React.Component {
     e.preventDefault()
     if(this.state.username === '' || this.state.username === ' ' ) return 
     this.props.setUser(this.state.username)
-    this.setState({username: '', proceed: true})
+    this.setState({username: ''})
     this.props.history.push('/home')
   }
 
@@ -30,13 +31,22 @@ class Login extends React.Component {
   }
 
   render () {
-    const proceed = (this.state.proceed) ? <Link to={'/home'}><button>Proceed</button></Link> : <div></div>
     return (
-      <form>
-          <input type="text" onChange={this.handleChange.bind(this)} placeholder="Username"
-            value={this.state.username}/>
-          <button onClick={this.submitUser.bind(this)}>Submit</button>
-      </form>
+      <div>
+        <Container>
+          <Grid className="segment centered stretched">
+            <Grid.Row stretched>
+              <Form centered stretched>
+                <Input type="text" onChange={this.handleChange.bind(this)} placeholder="Username"
+                    value={this.state.username}/>
+                <Input type="text" placeholder="Password"/>
+                <Button onClick={this.submitUser.bind(this)}>Submit</Button>
+              </Form>
+              <div style={{'padding':'20px'}}></div>
+            </Grid.Row>
+          </Grid>
+        </Container>  
+      </div>
     )
   }
 }

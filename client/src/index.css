@@ -3,3 +3,18 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+.App {
+  background-color: 'gray';
+  min-height: 1000px;
+}
+
+.title {
+  min-height: 400px;
+  padding :3em !important;
+}
+
+.icon {
+  padding-top: 1em !important;
+}
+

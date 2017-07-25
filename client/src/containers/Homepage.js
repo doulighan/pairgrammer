@@ -21,6 +21,7 @@ class Homepage extends React.Component {
 
   componentWillMount() {
     socket.emit('requestRooms', 'hello')
+    var i = 0
     socket.on('requestRooms', (data) => {
       this.props.loadRooms(data)
     })
@@ -35,11 +36,9 @@ class Homepage extends React.Component {
     return (
       <div>
         <h2>Welcome, {this.props.user.username} </h2>
-        <Navbar rooms={this.props.rooms} />
-          <Switch>
-            <Route path='/home/rooms/:roomid' render={p=>{return(<Room {...p} socket={socket} />)}} />
-            <Route path='/home' render={p => { return (<RoomForm {...p} socket={socket} /> )}} />
-          </Switch>
+        <Route  path='/home' render={p => { return (<Navbar rooms={this.props.rooms} {...p}/> )}} />
+        <Route  path='/home' render={p => { return (<RoomForm {...p} socket={socket} /> )}} />
+        <Route path='/home/rooms/:roomid' render={p=>{return(<Room user={this.props.user} {...p} socket={socket} />)}} />
       </div>
     )
   }
