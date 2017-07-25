@@ -5,7 +5,7 @@ import { getCurrentRoom } from '../actions/rooms'
 import Editor from './Editor'
 import Delay from 'react-delay'
 import ChatContainer from './ChatContainer'
-import {Grid, Segmemt} from 'semantic-ui-react' 
+import {Grid, Segment} from 'semantic-ui-react' 
 
 class Room extends React.Component {  
   constructor() {
@@ -29,7 +29,7 @@ class Room extends React.Component {
     if(this.state.room.users){
       peopleList = this.state.room.users.map(p => {
         if(p){
-          return <li key={p._id}>{p.username}</li>
+          return <a key={p._id}>{p.username}</a>
         }
       })
     }
@@ -37,19 +37,23 @@ class Room extends React.Component {
       <div>
         <Delay wait={1000}>
           <div>
-            <Grid padded>
-              <h1>{this.state.room.name}</h1>
-              <Grid.Row columns={2}>
-                <Grid.Column>
-                  <h4>Currently in room:</h4>
-                  <Editor socket={this.props.socket} room={this.state.room} />
-                </Grid.Column>
-                <Grid.Column>
-                  <ul>{peopleList}</ul>
-                  <ChatContainer socket={this.props.socket} room={this.state.room} user={this.props.user}  />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <Segment className='contianer'>
+              <Grid >
+                <h1>{this.state.room.name}</h1>
+                <ul>{peopleList}</ul>
+                <Grid.Row columns={2}>
+                    <Grid.Column>
+                      <h4>Currently in room:</h4>
+                      <Editor socket={this.props.socket} room={this.state.room} />
+                    </Grid.Column>
+                  <Segment className='chat'>
+                    <Grid.Column>
+                      <ChatContainer socket={this.props.socket} room={this.state.room} user={this.props.user}  />
+                    </Grid.Column>
+                  </Segment>
+                </Grid.Row>
+              </Grid>
+            </Segment>
           </div>
         </Delay>
       </div>

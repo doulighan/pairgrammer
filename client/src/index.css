@@ -18,3 +18,16 @@ body {
   padding-top: 1em !important;
 }
 
+.chat {
+  max-height: 900px;
+}
+
+.editor {
+
+}
+
+.container {
+  height: 80vh !important;
+  margin: 25px;
+}
+

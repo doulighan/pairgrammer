@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ChatWindow from '../components/ChatWindow'
 import ChatForm from './ChatForm'
-import {Segment, Grid} from 'semantic-ui-react'
+import {Segment, Grid, Menu} from 'semantic-ui-react'
 import Delay from 'react-delay'
 
 class ChatContainer extends React.Component {
@@ -22,12 +22,16 @@ class ChatContainer extends React.Component {
     return (
       <div>
         <Grid>
-          <Grid.Row tall>
-            <ChatWindow messages={this.state.messages} />
+        <Segment>
+          <Grid.Row>
+              <Menu vertical width='thin' fixed fluid>
+                <ChatWindow messages={this.state.messages} />
+              </Menu>
           </Grid.Row>
           <Grid.Row>
             <ChatForm socket={this.props.socket} roomid={this.props.room._id} user={this.props.user}/>
           </Grid.Row>
+          </Segment>
         </Grid>
       </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import MyComment from './MyComment'
-import {Comment, Header, Segment} from 'semantic-ui-react'
+import {Comment, Header, Segment, List, Menu} from 'semantic-ui-react'
 
 const ChatWindow = ({messages}) => {
   const comments = messages.map(m => <MyComment message={m} />)
@@ -9,7 +9,11 @@ const ChatWindow = ({messages}) => {
     <Segment>
       <Comment.Group>
         <Header as='h4' dividing>Chat</Header>
-        {comments}
+          <Menu>
+            <List>
+              <List.Item>{comments}</List.Item>
+            </List>
+          </Menu>
       </Comment.Group>
     </Segment>
   )
