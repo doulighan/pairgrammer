@@ -5,7 +5,7 @@ import { getCurrentRoom } from '../actions/rooms'
 import Editor from './Editor'
 import Delay from 'react-delay'
 import ChatContainer from './ChatContainer'
-import {Grid, Segment} from 'semantic-ui-react' 
+import {Grid, Segment, Sidebar, Menu} from 'semantic-ui-react' 
 
 class Room extends React.Component {  
   constructor() {
@@ -37,23 +37,27 @@ class Room extends React.Component {
       <div>
         <Delay wait={1000}>
           <div>
-            <Segment className='contianer'>
-              <Grid >
-                <h1>{this.state.room.name}</h1>
-                <ul>{peopleList}</ul>
-                <Grid.Row columns={2}>
-                    <Grid.Column>
-                      <h4>Currently in room:</h4>
-                      <Editor socket={this.props.socket} room={this.state.room} />
-                    </Grid.Column>
-                  <Segment className='chat'>
-                    <Grid.Column>
-                      <ChatContainer socket={this.props.socket} room={this.state.room} user={this.props.user}  />
-                    </Grid.Column>
-                  </Segment>
-                </Grid.Row>
-              </Grid>
-            </Segment>
+          <h1>{this.state.room.name}</h1>
+          <ul>{peopleList}</ul>
+            <h4>Currently in room:</h4>
+            <Sidebar.Pushable as={Segment} compact>
+              <Sidebar
+                as={Menu}
+                animation='overlay'
+                direction='right'
+                visible={true}
+                icon='labeled'
+                vertical
+              >
+                <ChatContainer socket={this.props.socket} room={this.state.room} user={this.props.user}  />
+              </Sidebar>
+              <Sidebar.Pusher>
+
+                
+                  <Editor socket={this.props.socket} room={this.state.room} />
+
+              </Sidebar.Pusher> 
+            </Sidebar.Pushable>
           </div>
         </Delay>
       </div>
