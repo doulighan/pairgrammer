@@ -31,9 +31,8 @@ class ChatForm extends React.Component {
   render () {
     return (
       <Form onSubmit={this.handleSubmit.bind(this)}>
-          <Input type="text" onChange={this.handleChange.bind(this)} placeholder="Type..."
+          <Input type="text" icon='reply' onChange={this.handleChange.bind(this)} placeholder="Type..."
             value={this.state.message}/>
-          <Button type='submit'/>
       </Form>
     )
   }
