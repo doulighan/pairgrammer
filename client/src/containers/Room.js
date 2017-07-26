@@ -37,7 +37,7 @@ class Room extends React.Component {
       <div>
         <Delay wait={1000}>
           <div>
-          <h1>{this.state.room.name}</h1>
+          <h1>{this.state.room.name}roomname</h1>
             <Sidebar.Pushable as={Segment} compact>
               <Sidebar
                 as={Menu}
@@ -47,7 +47,7 @@ class Room extends React.Component {
                 icon='labeled'
                 vertical
               >
-                <ChatContainer socket={this.props.socket} room={this.state.room} user={this.props.user}  />
+                
               </Sidebar>
               <Sidebar.Pusher>
 

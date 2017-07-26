@@ -2,10 +2,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-}
 
+}
+/*
 .App {
-  background-color: 'gray';
+  background-color: '#';
   min-height: 1000px;
 }
 
@@ -31,5 +32,150 @@ body {
 .container {
   height: 80vh !important;
   margin: 25px;
+}*/
+
+/*
+/*
+.color-primary-1 { color: #C16E22 } orange
+.color-primary-0 { color: #1F1913 } grey-brown
+.color-primary-2 { color: #946438 } tan
+.color-primary-3 { color: #40260E } bmed
+.color-primary-4 { color: #391B00 } bdark
+.color-gray-5 { color: #3d3d3d; }
+*/
+
+.header-container {
+  height:5em;
+  width:100%;
+  background-color:#000;
+  display:flex;
+  align-items: center;
 }
+
+.header-titles {
+  margin:0;
+  width:480px;
+  height:100%;
+  box-sizing:border-box;
+  background-color:#F92672;
+  display:flex;
+  align-items: center;
+  justify-content:center;  
+  border-radius:5px;
+
+}
+
+.header-container h1 {
+  padding:15px;
+  font-size:40px;
+  color:#fff;
+}
+
+.header-actions {
+  -webkit-box-flex:1;
+  flex: 1;
+  justify-content: flex-end;
+  -webkit-box-align:center;
+}
+
+
+.button-wide {
+  background-color:#A6E22E;
+  padding-right:1.5em;
+  padding-left:1.5em;
+  float: right;
+  margin-right:40px;
+}
+
+button {
+  display:inline-block;
+  padding:.6em 1em;
+  font-size:18px;
+  color:#272822;
+  border: none;
+}
+
+button:hover {
+  background-color: #35845d;
+  text-shadow: -1px 1px #2f7251;
+}
+
+.header-username {
+  display:inline-block;
+  margin-top:.25em;
+  padding-right:2em;
+  float:right;
+  text-align:center;
+  font-size:30px;
+  color:white;
+}
+
+.box {
+  margin-top:1rem ;
+  margin-right:1rem;
+  margin-left:1rem;
+  padding:1rem;
+  background-color:#272822;
+  border-radius:5px;
+
+}
+
+.home-container {
+  max-width:100%;
+  display:flex;
+  border-top :5px solid black;
+  background-color: #777;
+}
+
+.left-panel {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.navbar-container {
+  flex:1;
+}
+
+.chat-container {
+  flex:2;
+  margin-top:1.5rem;
+  margin-bottom:4rem;
+}
+
+.editor-panel {
+  margin-top:1em;
+  padding-left:5px;
+  flex:3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

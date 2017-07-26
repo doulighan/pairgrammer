@@ -6,6 +6,7 @@ import { loadRooms } from '../actions/rooms'
 import Room from './Room'
 import Navbar from '../components/Navbar'
 import RoomForm from './RoomForm'
+import Header from '../components/Header'
 import io from 'socket.io-client'
 
 const socket = io('http://192.168.5.178:3000')
@@ -33,13 +34,35 @@ class Homepage extends React.Component {
 
 
   render () {
-    if(!this.props.user.username) {this.props.history.push('/login')}
+    // if(!this.props.user.username) {this.props.history.push('/login')}
     return (
       <div>
-        <h2>Welcome, {this.props.user.username} </h2>
-        <Route  path='/home' render={p => { return (<Navbar rooms={this.props.rooms} {...p}/> )}} />
-        <Route  path='/home' render={p => { return (<RoomForm {...p} socket={socket} /> )}} />
-        <Route path='/home/rooms/:roomid' render={p=>{return(<Room user={this.props.user} {...p} socket={socket} />)}} />
+        <Header username={this.props.username} /> 
+        <div className='home-container'>
+          <div className='left-panel'>
+            <div className='navbar-container box'>
+              <Navbar rooms={this.props.rooms} />
+              <div className='room-form-container'>
+                <RoomForm socket={socket} />
+              </div>
+            </div>
+            <div className='chat-container box'>
+              <h3>CHAT</h3>
+              <ul>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+                <li>chatstuff</li>
+              </ul>
+            </div>
+          </div>
+          <div className='editor-panel'>
+            <Route path='/home/rooms/:roomid' render={p=>{return(<Room user={this.props.user} {...p} socket={socket} />)}} />
+          </div>
+        </div>
       </div>
     )
   }
