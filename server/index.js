@@ -23,15 +23,18 @@ io.on('connection', (socket) => {
   socket.on('makeRoom', (data) => {
     makeRoom(data, socket)
    })
+
   socket.on('joinRoom', (id) => {
     joinRoom(id, socket)
   })
+
   socket.on('leaveRoom', (roomid) => {
     leaveRoom(roomid, socket)
   })
 
   socket.on('codeUpdate', (data) => {
     codeUpdate(data, socket)
+    socket.broadcast.to(data.id).emit('blockInput', data.user)
   })
 
   socket.on('requestRooms', (data) => {
@@ -42,6 +45,7 @@ io.on('connection', (socket) => {
     console.log(data)
     chat(data, socket)
   })
+
 })
 
 mongoose.connect('mongodb://localhost/db')

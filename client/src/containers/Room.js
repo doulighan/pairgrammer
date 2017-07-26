@@ -29,7 +29,7 @@ class Room extends React.Component {
     if(this.state.room.users){
       peopleList = this.state.room.users.map(p => {
         if(p){
-          return <a key={p._id}>{p.username}</a>
+          return <li key={p._id}>{p.username}</li>
         }
       })
     }
@@ -38,8 +38,6 @@ class Room extends React.Component {
         <Delay wait={1000}>
           <div>
           <h1>{this.state.room.name}</h1>
-          <ul>{peopleList}</ul>
-            <h4>Currently in room:</h4>
             <Sidebar.Pushable as={Segment} compact>
               <Sidebar
                 as={Menu}
@@ -54,11 +52,13 @@ class Room extends React.Component {
               <Sidebar.Pusher>
 
                 
-                  <Editor socket={this.props.socket} room={this.state.room} />
+                  <Editor socket={this.props.socket} room={this.state.room} user={this.props.user} />
 
               </Sidebar.Pusher> 
             </Sidebar.Pushable>
-          </div>
+          <h4>Currently in room:</h4>
+          <ul>{peopleList}</ul>
+          </div> 
         </Delay>
       </div>
     )

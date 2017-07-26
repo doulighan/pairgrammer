@@ -11,7 +11,6 @@ const SplashPage = () => {
       <Switch>
         <Route path={'/home'} component={Homepage}/> 
         <Route path={'/'} component={LoginWrapper} />
-        
       </Switch>
     </div>
   )

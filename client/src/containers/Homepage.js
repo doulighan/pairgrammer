@@ -33,6 +33,7 @@ class Homepage extends React.Component {
 
 
   render () {
+    if(!this.props.user.username) {this.props.history.push('/login')}
     return (
       <div>
         <h2>Welcome, {this.props.user.username} </h2>
@@ -52,8 +53,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    rooms: state.rooms,
-    user: state.user    
+    user: state.user,  
+    rooms: state.rooms  
   }
 }
 

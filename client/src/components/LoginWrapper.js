@@ -12,7 +12,7 @@ const LoginWrapper = () => {
         <Header className='icon' as='h1' icon textAlign='center' >
           <Icon name='blind' massive/>
           <Header.Content center>
-              co-op
+              PairGram
           </Header.Content>
         </Header>
       </Segment>

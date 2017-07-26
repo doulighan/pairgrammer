@@ -1,0 +1,118 @@
+<div class='document'>
+  <header class='title'><h1>PairGram</h1>
+   
+  </header>
+ <nav class='main-nav'>
+    <button>home</button>
+    <button>new</button>
+  </nav>
+  
+  <article class='editor-container'>
+    <section class='document-sec'>
+      <nav class='document-nav'>
+        <h4>Saved documents</h4>
+        <ul>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+          <li>doc1</li>
+        </ul>
+      </nav>
+    </section>
+    
+    <section class='chat'>
+      <h4>Chat!</h4>
+      <div class='chat-window'>
+        <ul>
+          <li>heyw whatsut</li>
+          <li>doc1</li>
+          <li>this is gonna be some chat so i should type alot more</li>
+          <li>doc1</li>
+          <li>do you even code bro? I dont code bro.</li>
+        </ul>
+      </div>    
+      <div class='chat-form'>
+        <input type='text' value='input'></input>
+      </div>
+    </section>
+  </article>
+  
+  <section class='editor'>
+    <div class='editor-nav'>
+    <div class='editor-screen'>
+      <span>INGFO</span> <span>MORE</span> <span>OK</span>
+      <div class='ace'>
+        ------
+      </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+
+div.document { 
+  width:100%; 
+  height: 90%;
+  background-color: gray
+}
+
+.main-nav {
+  float: right;
+  display:inline;
+  width: 70%;
+  
+}
+
+.title { 
+  padding: 1em; 
+  width: 20%;
+  color: white; 
+  clear: left;
+  text-align: center;
+  }
+  
+  .editor-container {
+    background-color: white;
+    padding: 1em;
+    float:left;
+  }
+  
+  .editor-screen {
+
+    height: 92.9%;
+    width: 770;
+    border: 1px solid;
+    background-color: white;
+    padding: 1em;
+  }
+  
+  .editor {
+    display: flex;
+    height: 62.6%;
+    width: 60%;
+    background-color: white;
+    padding: 1em;
+    float:left
+  }
+  
+  .document-sec {
+    border: 1px solid black;  
+    padding 1em;
+    margin-bottom: 1em;
+  }
+  
+  .chat {
+    padding 1em;
+    border: 1px solid; 
+    padding: 1em;
+   
+  }
+  
+  
+
