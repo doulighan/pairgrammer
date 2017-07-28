@@ -7,6 +7,7 @@ import Room from './Room'
 import Navbar from '../components/Navbar'
 import RoomForm from './RoomForm'
 import Header from '../components/Header'
+import ChatContainer from './ChatContainer'
 import io from 'socket.io-client'
 
 const socket = io('http://192.168.5.178:3000')
@@ -47,16 +48,9 @@ class Homepage extends React.Component {
               </div>  
             </div>
             <div className='chat-container box'>
-              <h3>CHAT</h3>
-              <ul>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-                <li>chatstuff</li>
-              </ul>
+              <ChatContainer user={this.props.user} socket={socket}/>
+              <div className='chat-info' />
+                <h2>Chat</h2>
             </div>
           </div>
           <div className='editor-panel'>

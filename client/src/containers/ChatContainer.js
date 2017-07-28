@@ -19,10 +19,11 @@ class ChatContainer extends React.Component {
   }
 
   render () {
+    let chatForm = (this.state.room) ? <ChatForm socket={this.props.socket} roomid={this.props.room._id} user={this.props.user}/>  : <div></div>
     return (
       <div>
         <ChatWindow messages={this.state.messages} />
-        <ChatForm socket={this.props.socket} roomid={this.props.room._id} user={this.props.user}/>
+        {chatForm}
       </div>
     )
   }

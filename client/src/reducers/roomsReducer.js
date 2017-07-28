@@ -12,7 +12,10 @@ export default function usersReducer(state = [], action) {
 
     case 'LOAD_ROOMS':
       return action.payload
+
     default:
       return state
+
+
   }
 }

@@ -25,6 +25,7 @@ class Room extends React.Component {
   }
 
   render() {
+    console.log(this.props.rooms)
     var peopleList = ''
     if(this.state.room.users){
       peopleList = this.state.room.users.map(p => {
@@ -50,8 +51,14 @@ class Room extends React.Component {
 function mapStateToProps(state) {
   return {
     rooms: state.rooms,
-    user: state.user    
+    user: state.user,
   }
+}
+
+function mapDispatchToProps(dispatch) {
+  return (
+    setRoomId: setRoomId
+  )
 }
 
 export default connect(mapStateToProps, null)(Room)
