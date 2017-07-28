@@ -5,16 +5,14 @@ import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 
 const Navbar = ({rooms}) =>  {
   return ( 
-    <div>
-      <ul>
+    <div className='nav-scroll'>
         {rooms.map(room =>
-          <li>
-            <NavLink key={room._id} to={`/home/rooms/${room._id}`}>
-              {room.name}
-            </NavLink>
-          </li>
+          <div className='nav-item'>
+            <Link key={room._id} to={`/home/rooms/${room._id}`}>
+                <div className='x'>{room.name}</div>
+            </Link>
+          </div>
         )} 
-      </ul>
     </div>
   )
 }

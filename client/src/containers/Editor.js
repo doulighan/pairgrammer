@@ -61,8 +61,7 @@ class Editor extends React.Component {
     const options = { lineNumbers: true, mode: this.state.mode, readOnly: this.state.readOnly }
     const typingMessage = (this.state.readOnly) ? <TypeMessage username={this.state.username} /> : <p></p>
     return (  
-      <div>
-        <div>
+      <div className='editor-div'>
         <AceEditor
            className='ace-editor'
            mode="javascript"
@@ -77,7 +76,6 @@ class Editor extends React.Component {
            editorProps={{$blockScrolling: true}}
          />
         {typingMessage}
-      </div>
     </div>
     )
   }

@@ -36,26 +36,8 @@ class Room extends React.Component {
     return (
       <div>
         <Delay wait={1000}>
-          <div>
-          <h1>{this.state.room.name}roomname</h1>
-            <Sidebar.Pushable as={Segment} compact>
-              <Sidebar
-                as={Menu}
-                animation='overlay'
-                direction='right'
-                visible={true}
-                icon='labeled'
-                vertical
-              >
-                
-              </Sidebar>
-              <Sidebar.Pusher>
-
-                
-                  <Editor socket={this.props.socket} room={this.state.room} user={this.props.user} />
-
-              </Sidebar.Pusher> 
-            </Sidebar.Pushable>
+          <div>   
+            <Editor socket={this.props.socket} room={this.state.room} user={this.props.user} />
           <h4>Currently in room:</h4>
           <ul>{peopleList}</ul>
           </div> 

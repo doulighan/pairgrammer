@@ -4,37 +4,7 @@ body {
   font-family: 'Roboto', sans-serif;
 
 }
-/*
-.App {
-  background-color: '#';
-  min-height: 1000px;
-}
 
-.title {
-  min-height: 400px;
-  padding :3em !important;
-}
-
-.icon {
-  padding-top: 1em !important;
-}
-  
-.ace-editor {
-  width: 100%;
-  height: 100%;
-}
-
-
-.ui.grid {
-    max-height: 90% !important;
-}
-
-.container {
-  height: 80vh !important;
-  margin: 25px;
-}*/
-
-/*
 /*
 .color-primary-1 { color: #C16E22 } orange
 .color-primary-0 { color: #1F1913 } grey-brown
@@ -116,8 +86,8 @@ button:hover {
   margin-left:1rem;
   padding:1rem;
   background-color:#272822;
-  border-radius:5px;
-
+  border-radius:3px;
+  box-shadow: 2px 2px 2px black;
 }
 
 .home-container {
@@ -135,7 +105,37 @@ button:hover {
 
 .navbar-container {
   flex:1;
+  display:flex;
+  flex-direction:column;
 }
+
+.nav-info {
+  flex:1;
+  margin-bottom:-1.5em;
+  margin-top: .5em;
+  text-align:center;
+  color:#66D9EF
+}
+
+.nav-scroll {
+  flex:4;
+  align-items: stretch;
+  overflow-y: scroll;
+}
+
+.nav-item {
+  margin-left:8px;
+  background-color:#272822; 
+  color:#fff;
+
+}
+
+.nav-item:hover {
+  background-color:#66D9EF;
+  color:#000; 
+}
+
+
 
 .chat-container {
   flex:2;
@@ -149,20 +149,17 @@ button:hover {
   flex:3;
 }
 
+.editor-div {
+  border-radius:3px;
+}
 
+.x {
+  color: #FFF;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.x:hover {
+  color: #000;
+}
 
 
 

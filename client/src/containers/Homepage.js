@@ -32,7 +32,7 @@ class Homepage extends React.Component {
     socket.emit('addPerson', this.props.user)
   }
 
-
+  //<RoomForm socket={socket} />
   render () {
     // if(!this.props.user.username) {this.props.history.push('/login')}
     return (
@@ -42,9 +42,9 @@ class Homepage extends React.Component {
           <div className='left-panel'>
             <div className='navbar-container box'>
               <Navbar rooms={this.props.rooms} />
-              <div className='room-form-container'>
-                <RoomForm socket={socket} />
-              </div>
+              <div className='nav-info'>
+                <h2>Rooms</h2>
+              </div>  
             </div>
             <div className='chat-container box'>
               <h3>CHAT</h3>
