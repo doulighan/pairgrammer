@@ -11,13 +11,16 @@ class ChatForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    console.log(this.props.color)
     const data = {
-            room: this.props.roomid,
+            room: this.props.roomid,      
             message: { 
               user: { name: this.props.user.username },
-              body: this.state.message
+              body: this.state.message,
+              color: this.props.color
             }
           }
+    console.log(data)
     this.props.socket.emit('chat', data)
     this.setState({message: ''})
   }
@@ -30,10 +33,10 @@ class ChatForm extends React.Component {
 
   render () {
     return (
-      <Form onSubmit={this.handleSubmit.bind(this)}>
-          <Input type="text" icon='reply' onChange={this.handleChange.bind(this)} placeholder="Type..."
+      <form onSubmit={this.handleSubmit.bind(this)}>
+          <input className='input-text' type="text" icon='reply' onChange={this.handleChange.bind(this)} placeholder="Type..."
             value={this.state.message}/>
-      </Form>
+      </form>
     )
   }
 }

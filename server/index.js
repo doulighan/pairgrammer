@@ -21,12 +21,17 @@ io.on('connection', (socket) => {
   })
 
   socket.on('makeRoom', (data) => {
+    console.log(data)
     makeRoom(data, socket)
    })
 
   socket.on('joinRoom', (id) => {
     joinRoom(id, socket)
   })
+
+  // socket.on('setColor', (data) => {
+  //   setColor(data.roomid, data.color, socket)
+  // })
 
   socket.on('leaveRoom', (roomid) => {
     leaveRoom(roomid, socket)
@@ -42,7 +47,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('chat', (data) => {
-    console.log(data)
     chat(data, socket)
   })
 
@@ -56,14 +60,15 @@ http.listen(3000, function(){
 
 //////////////////////////////////////////////////////////////////
 function chat(data, socket) {
+  console.log(data)
   var message = new Message({user: {name: data.message.user.name, socketID: socket.id}, 
-    body: data.message.body
+    body: data.message.body,
+    color: data.message.color
   })
   Room.findOne({_id: data.room}, (err, room) => {
     message.markModified('message')
     room.messages.push(message)
     room.save()
-    console.log(room)
   })
   io.sockets.to(data.room).emit('chat', message)
 }
@@ -139,6 +144,21 @@ function codeUpdate(data, socket) {
   })
 }
 
+function setColor(roomid, color, socket) {
+  User.findOne({socketID: socket.id}, (err, user) => {
+    setColorRoom(roomid, user, color)
+  })
+}
+
+function setColorRoom(roomid, user, color) {
+    Room.findOne({_id: roomid}, (err, room) => {
+      if(user == null || room == null) {return 'null room/user'}
+      user.markModified('user')
+      room.users.push(user)
+      room.save()
+      sendRoom(room)
+    })
+  }
 
 
 

@@ -5,6 +5,7 @@ const userSchema = new Schema({
   username: String,
   _id: String,
   socketID: String,
+  color: String
 })
 
 module.exports = mongoose.model('User', userSchema, 'user')

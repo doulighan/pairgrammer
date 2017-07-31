@@ -1,18 +1,11 @@
-body {
+
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  background:#777;
 
 }
-
-/*
-.color-primary-1 { color: #C16E22 } orange
-.color-primary-0 { color: #1F1913 } grey-brown
-.color-primary-2 { color: #946438 } tan
-.color-primary-3 { color: #40260E } bmed
-.color-primary-4 { color: #391B00 } bdark
-.color-gray-5 { color: #3d3d3d; }
-*/
 
 .header-container {
   height:5em;
@@ -87,11 +80,13 @@ button:hover {
   padding:1rem;
   background-color:#272822;
   border-radius:3px;
-  box-shadow: 2px 2px 2px black;
+  /*box-shadow: 2px 2px 2px black;*/
 }
 
 .home-container {
   max-width:100%;
+  max-height:94vh;
+  min-height:94vh;
   display:flex;
   border-top :5px solid black;
   background-color: #777;
@@ -99,22 +94,26 @@ button:hover {
 
 .left-panel {
   flex:1;
+  order:1;
+  display:flex;
+  max-height:86vh;
+  flex-direction:column;
+}
+.right-panel {
+  flex:1;
+  order:3;
+  min-height:88vh;
   display:flex;
   flex-direction:column;
 }
 
 .navbar-container {
-  flex:1;
+  flex:.8;
+  order:2;
   display:flex;
   flex-direction:column;
-}
-
-.nav-info {
-  flex:1;
-  margin-bottom:-1.5em;
-  margin-top: .5em;
-  text-align:center;
-  color:#66D9EF
+  border-bottom:20rem;
+  border:6px solid #66D9EF;
 }
 
 .nav-scroll {
@@ -134,13 +133,6 @@ button:hover {
   background-color:#66D9EF;
   color:#000; 
 }
-
-.chat-container {
-  flex:2;
-  margin-top:1.5rem;
-  margin-bottom:4rem;
-}
-
 .nav-info {
   flex:1;
   margin-bottom:-1.5em;
@@ -149,19 +141,76 @@ button:hover {
   color:#66D9EF
 }
 
+.room-info {
+  flex:1;
+  border-top:2em;
+  border:6px solid #FD971F;
+}
+
+.room-info-text {
+  color:#fff;
+}
+
+.chat-container {
+  flex:2;
+  display:flex;
+  flex-direction: column;
+  margin-bottom:5.1rem;
+  min-height:73vh;
+  border:6px solid #F92672;
+}
+
+
 .chat-scroll {
   flex:4;
+  min-height:71vh;
+  max-height:72vh;
+  align-items: stretch;
   overflow-y: scroll;
+  display:flex;
+  flex-direction: column-reverse;
 }
+
+.chat-info {
+  margin-top: .5em;
+  margin-bottom: -7em;
+  text-align:center;
+  color:#66D9EF
+}
+
+
+.comment {
+  word-wrap: break-word;
+  margin-top:.5em;
+}
+
+.comment h5 {
+  margin:0;
+}
+.comment p {
+  margin:0;
+}
+
+.input-text {
+  width:80%;
+  margin-left:10%;
+  margin-top:2em;
+}
+
 
 .editor-panel {
   margin-top:1em;
-  padding-left:5px;
+  padding-left:8px;
+  padding-right:8px;
   flex:3;
+  order:2;
 }
 
 .editor-div {
   border-radius:3px;
+  padding:4px;
+  background-color:#272822;
+  /*box-shadow: 2px 2px 2px black;*/
 }
 
 .x {
@@ -171,7 +220,6 @@ button:hover {
 .x:hover {
   color: #000;
 }
-
 
 
 

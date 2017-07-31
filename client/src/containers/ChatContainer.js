@@ -2,14 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ChatWindow from '../components/ChatWindow'
 import ChatForm from './ChatForm'
-import {Segment, Grid, Menu, Sidebar} from 'semantic-ui-react'
-import Delay from 'react-delay'
+import {connect} from 'react-redux'
 
 class ChatContainer extends React.Component {
   constructor() {
     super()
     this.state = {
-      messages: [{user: {name: 'Pairgrammer', socketID: 1}, body: 'Welcome to chat!', time: 0}]
+      messages: []
     }
   }
 
@@ -19,14 +18,24 @@ class ChatContainer extends React.Component {
   }
 
   render () {
-    let chatForm = (this.state.room) ? <ChatForm socket={this.props.socket} roomid={this.props.room._id} user={this.props.user}/>  : <div></div>
+    const chatForm = (this.props.room) ?  <ChatForm roomid={this.props.room._id} user={this.props.user} socket={this.props.socket} color={this.props.color} /> : <div>not in room</div>
     return (
       <div>
-        <ChatWindow messages={this.state.messages} />
+        <ChatWindow messages={this.state.messages.reverse()} />
         {chatForm}
       </div>
     )
   }
 }
 
-export default ChatContainer
+function mapStateToProps(state) {
+  console.log(state)
+  return {
+    room: state.room,
+    user: state.user,
+    color: state.color
+  }
+}
+
+export default connect(mapStateToProps, null)(ChatContainer)
+

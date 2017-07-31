@@ -1,19 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Comment } from 'semantic-ui-react'
 
 const MyComment = ({message}) => {
   console.log(message)
   return (
-    <Comment>
-      <Comment.Content>
-        <Comment.Author as='a'>{message.user.name}</Comment.Author>
-        <Comment.Metadata>
-          <span>Today at {message.time}</span>
-        </Comment.Metadata>
-        <Comment.Text>{message.body}</Comment.Text>
-      </Comment.Content>
-    </Comment>
+    <div className='comment'>
+      <h5 style={{'color':`${message.color}`}}>{message.user.name}</h5>
+      <p style={{'color':'#666'}}>Today at {message.time}</p>
+      <p style={{'color':'#fff'}}>{message.body}</p>
+    </div>
   )
 }
 
