@@ -12,7 +12,5 @@ export default function roomsReducer(state = [], action) {
 
     default:
       return state
-
-
   }
 }

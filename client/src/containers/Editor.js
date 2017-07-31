@@ -66,7 +66,7 @@ class Editor extends React.Component {
            className='ace-editor'
            mode="javascript"
            height='800px'
-           width='1000px'
+           width='1150px'
            fontSize='14px'
            theme='monokai'
            ref="ace"
