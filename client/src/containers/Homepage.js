@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar'
 import RoomForm from './RoomForm'
 import Header from '../components/Header'
 import ChatContainer from './ChatContainer'
+import Delay from 'react-delay'
 import io from 'socket.io-client'
 
 const socket = io('http://192.168.5.178:3000')
@@ -25,7 +26,7 @@ class Homepage extends React.Component {
     socket.emit('requestRooms', 'hello')
     var i = 0
     socket.on('requestRooms', (data) => {
-      this.props.loadRooms(data)
+      this.setState({rooms: data})
     })
   }
 
@@ -36,15 +37,17 @@ class Homepage extends React.Component {
   //<RoomForm socket={socket} />
   render () {
     // if(!this.props.user.username) {this.props.history.push('/login')}
+    var navbar = (this.state.rooms) ? <Navbar rooms={this.state.rooms} /> : <div></div>
     return (
       <div>
         <Header username={this.props.username} /> 
         <div className='home-container'>
           <div className='left-panel'>
             <div className='navbar-container box'>
-              <Navbar rooms={this.props.rooms} />
+              <Navbar rooms={this.state.rooms} />
               <div className='nav-info'>
                 <h2>Rooms</h2>
+                <RoomForm socket={socket} />
               </div>  
             </div>
             <div className='chat-container box'>
@@ -62,16 +65,13 @@ class Homepage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
+export default connect(mapStateToProps, null)(Homepage)
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadRooms: loadRooms}, dispatch)
-}
 
 function mapStateToProps(state) {
   return {
     user: state.user,  
-    rooms: state.rooms  
+    room: state.room  
   }
 }
 

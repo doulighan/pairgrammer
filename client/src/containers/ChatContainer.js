@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ChatWindow from '../components/ChatWindow'
 import ChatForm from './ChatForm'
-import {Segment, Grid, Menu, Sidebar} from 'semantic-ui-react'
+import {connect} from 'react-redux'
 import Delay from 'react-delay'
 
 class ChatContainer extends React.Component {
@@ -19,7 +19,7 @@ class ChatContainer extends React.Component {
   }
 
   render () {
-    let chatForm = (this.state.room) ? <ChatForm socket={this.props.socket} roomid={this.props.room._id} user={this.props.user}/>  : <div></div>
+    const chatForm = (this.props.room) ?  <ChatForm roomid={this.props.room._id} user={this.props.user} socket={this.props.socket} /> : <div>not in room</div>
     return (
       <div>
         <ChatWindow messages={this.state.messages} />
@@ -29,4 +29,13 @@ class ChatContainer extends React.Component {
   }
 }
 
-export default ChatContainer
+function mapStateToProps(state) {
+  console.log(state)
+  return {
+    room: state.room,
+    user: state.user,
+  }
+}
+
+export default connect(mapStateToProps, null)(ChatContainer)
+

@@ -1,7 +1,7 @@
 import React from 'react'  
 import {connect} from 'react-redux'  
 import {bindActionCreators} from 'redux'
-import { getCurrentRoom } from '../actions/rooms'
+import { setRoom } from '../actions/rooms'
 import Editor from './Editor'
 import Delay from 'react-delay'
 import ChatContainer from './ChatContainer'
@@ -17,7 +17,10 @@ class Room extends React.Component {
   
   componentDidMount() {
     this.props.socket.emit('joinRoom', this.props.match.params.roomid )
-    this.props.socket.on('sendRoom', (room) => this.setState({room: room}))
+    this.props.socket.on('sendRoom', (room) => {
+      this.props.setRoom(room)
+      this.setState({room: room})
+    })
   }
 
   componentWillUnmount() {
@@ -25,7 +28,6 @@ class Room extends React.Component {
   }
 
   render() {
-    console.log(this.props.rooms)
     var peopleList = ''
     if(this.state.room.users){
       peopleList = this.state.room.users.map(p => {
@@ -50,17 +52,17 @@ class Room extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    rooms: state.rooms,
+    room: state.room,
     user: state.user,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return (
-    setRoomId: setRoomId
+    bindActionCreators({setRoom: setRoom}, dispatch)
   )
 }
 
-export default connect(mapStateToProps, null)(Room)
+export default connect(mapStateToProps, mapDispatchToProps)(Room)
 
 
