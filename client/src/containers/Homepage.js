@@ -45,6 +45,7 @@ class Homepage extends React.Component {
               <Navbar rooms={this.props.rooms} />
               <div className='nav-info'>
                 <h2>Rooms</h2>
+                <RoomForm socket={socket} />
               </div>  
             </div>
             <div className='chat-container box'>
