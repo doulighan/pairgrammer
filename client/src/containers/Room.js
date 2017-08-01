@@ -15,16 +15,27 @@ class Room extends React.Component {
       room: {},
     }
     this.colors = ['#66D9EF', '#F92672', '#A6E22E', '#FD971F']
+    this.classNames = ['editor-animate-div']
   }
-  
-  componentDidMount() {
-    this.props.socket.emit('joinRoom', this.props.match.params.roomid )
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.roomid !== this.props.match.params.roomid) {
+      this.initialize(nextProps.match.params.roomid)
+    }
+  }
+
+  initialize(roomid) {
+    this.props.socket.emit('joinRoom', roomid )
     this.props.socket.on('sendRoom', (room) => {
       console.log('INCOMING: ', room)
       this.props.setRoom(room)
       this.setState({room: room})
-    })
-    setTimeout(this.generateColor.bind(this), 2000)
+    }, this.render())
+    setTimeout(this.generateColor.bind(this), 250)
+  }
+  
+  componentDidMount() {
+    this.initialize(this.props.match.params.roomid)
   }
 
   componentWillUnmount() {
@@ -39,27 +50,26 @@ class Room extends React.Component {
     this.props.socket.emit('setColor', {roomid: this.props.match.params.roomid, color: color})
   }
 
-     // <h4>Currently in room:</h4>
-     //      <ul>{peopleList}</ul>
-  render() {
-    var peopleList = ''
-    if(this.state.room.users){
-      peopleList = this.state.room.users.map(p => {
-        if(p){
-          p.color = p.color || '#FF0000'
-          console.log(p.color)
-          return <li key={p._id} style={{'color':`${p.color}`}}>{p.username}</li>
-        }
-      })
+  loading() {
+    if(this.state.room._id) {
+      return (
+        <div className='editor-animate-div'>   
+            <Editor socket={this.props.socket} room={this.state.room} user={this.props.user} />
+        </div> 
+      )
+    } else {
+      return (
+        <div></div>
+      )
     }
+  }
 
+
+  render() {
+    const load = this.loading()
     return (
       <div>
-        <Delay wait={1000}>
-          <div>   
-            <Editor socket={this.props.socket} room={this.state.room} user={this.props.user} />
-          </div> 
-        </Delay>
+        {load}
       </div>
     )
   }

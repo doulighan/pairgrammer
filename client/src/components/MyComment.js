@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const MyComment = ({message}) => {
-  console.log(message)
   return (
     <div className='comment'>
       <h5 style={{'color':`${message.color}`}}>{message.user.name}</h5>

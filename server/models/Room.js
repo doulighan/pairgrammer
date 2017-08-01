@@ -8,6 +8,8 @@ const roomSchema = new Schema({
   name: String,
   _id: String,
   code: String, 
+  mode: String,
+  password: String,
   users: [User.schema],
   messages: [Message.schema]
 })

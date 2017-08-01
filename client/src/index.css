@@ -1,3 +1,6 @@
+::-webkit-scrollbar {
+  background:#555;
+}
 
 html, body {
   margin: 0;
@@ -108,6 +111,7 @@ button:hover {
 }
 
 .navbar-container {
+  padding-right:0px;
   flex:.8;
   order:2;
   display:flex;
@@ -119,11 +123,16 @@ button:hover {
 .nav-scroll {
   flex:4;
   align-items: stretch;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.nav-scroll:hover::-webkit-scrollbar-thumb {
+  background:#FFF;
 }
 
 .nav-item {
   margin-left:8px;
+  margin-right:20px;
   background-color:#272822; 
   color:#fff;
 
@@ -145,14 +154,53 @@ button:hover {
   flex:1;
   border-top:2em;
   border:6px solid #FD971F;
+  max-height:66%;
+  overflow-y: auto;
 }
 
+.room-info:hover::-webkit-scrollbar-thumb {
+  background:#FFF;
+}
+
+.room-info-text {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nametag {
+  margin:1em;
+  padding:1em;
+  min-width:40%;
+  text-align:center; 
+}
+
+.room-info-header h2 {
+  width:100%;
+  text-align: center;
+  color:#FD971F;
+}
+
+.welcome-info {
+  text-align: center;
+  word-wrap:break-word;
+}
+
+.welcome-info h2 {
+  color:#fff;
+}
+
+.welcome-info h3 {
+  color:#FD971F;
+}
 
 .chat-container {
   flex:2;
   display:flex;
   flex-direction: column;
   margin-bottom:5.1rem;
+  padding-right:0px;
+  padding-top:0px;
   min-height:73vh;
   border:6px solid #F92672;
 }
@@ -163,16 +211,20 @@ button:hover {
   min-height:71vh;
   max-height:72vh;
   align-items: stretch;
-  overflow-y: scroll;
+  overflow-y: auto;
   display:flex;
   flex-direction: column-reverse;
+}
+
+.chat-scroll:hover::-webkit-scrollbar-thumb {
+  background:#FFF;
 }
 
 .chat-info {
   margin-top: .5em;
   margin-bottom: -7em;
   text-align:center;
-  color:#66D9EF
+  color:#F92672
 }
 
 
@@ -216,6 +268,24 @@ button:hover {
 
 .x:hover {
   color: #000;
+}
+
+
+.editor-animate-div {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  opacity: 1;
+  visibility: visible; 
+}
+.show {
+  opacity: 1;
+  visibility: visible; 
+}
+
+.hidden {
+  visibility: hidden; 
 }
 
 

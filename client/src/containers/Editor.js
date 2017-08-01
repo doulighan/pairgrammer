@@ -1,28 +1,42 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
-import brace from 'brace';
-import AceEditor from 'react-ace';
+import brace from 'brace'
+import AceEditor from 'react-ace'
 import TypeMessage from '../components/TypeMessage'
 
-import 'brace/mode/java';
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
+import 'brace/mode/java'
+import 'brace/mode/javascript'
+import 'brace/mode/python'
+import 'brace/mode/xml'
+import 'brace/mode/ruby'
+import 'brace/mode/sass'
+import 'brace/mode/markdown'
+import 'brace/mode/mysql'
+import 'brace/mode/json'
+import 'brace/mode/html'
+import 'brace/mode/handlebars'
+import 'brace/mode/golang'
+import 'brace/mode/csharp'
+import 'brace/mode/elixir'
+import 'brace/mode/typescript'
+import 'brace/mode/css'
+
+import 'brace/theme/monokai'
 
 
 class Editor extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props.room)
     this.state = {
       room: props.room,
       readOnly: false,
-      mode: 'javascript',
-      username: '',
+      mode: props.mode,
+      username: ''
     }
   }
 
   handleChange = (code) => {
+    if(this.state.readOnly) return 
     let cursor = this.refs.ace.editor.selection.getCursor()
     this.props.socket.emit('codeUpdate', {
       id: this.props.room._id,
@@ -35,8 +49,14 @@ class Editor extends React.Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.room._id !== this.props.room.id) {
+      console.log('Room next:', nextProps.room.name, "Room this:", this.state.room.name)
+      this.setState({room: nextProps.room})
+    }
+  }
+
   update(data) {
-    console.log('data in:', data)
     this.setState({ 
       room: {...this.state.room, code: data}
     })
@@ -50,9 +70,8 @@ class Editor extends React.Component {
   blockInput(user) {
     console.log(user.name, 'is typing...')
     this.setState({readOnly: true, username: user.name})
-    this.refs.ace.editor.setReadOnly(true)
+
     setTimeout(() => {
-      this.refs.ace.editor.setReadOnly(false)
       this.setState({readOnly: false})
     }, 1000)
   }
@@ -64,9 +83,9 @@ class Editor extends React.Component {
       <div className='editor-div'>
         <AceEditor
            className='ace-editor'
-           mode="javascript"
+           mode={this.props.mode}
            height='800px'
-           width='1150px'
+           width='600px'
            fontSize='14px'
            theme='monokai'
            ref="ace"

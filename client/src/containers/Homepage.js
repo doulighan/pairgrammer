@@ -39,8 +39,16 @@ class Homepage extends React.Component {
   render () {
     
     if(!this.props.user.username) {this.props.history.push('/login')}
-    var navbar = (this.state.rooms) ? <Navbar rooms={this.state.rooms} /> : <div></div>
+    var navbar = (this.state.rooms) ? <Navbar rooms={this.state.rooms} /> : <div/>
     var roomInfo = (this.props.room) ? <RoomInfo room={this.props.room} user={this.props.user} /> : <div>Not in room</div>
+
+    if(this.props.location.pathname === '/home') {
+      roomInfo = <div className='welcome-info'>
+                  <h2>Welcome to Pairgrammer!</h2>
+                  <h3>Join an open room below, or create a new room</h3>
+                 </div>
+
+    }
     return (
       <div>
         <Header username={this.props.user.username} /> 
@@ -50,8 +58,7 @@ class Homepage extends React.Component {
             <div className='navbar-container box'>
               {navbar}
               <div className='nav-info'>
-                <h2>Rooms</h2>
-                <RoomForm socket={socket} />
+                <h2>Rooms</h2>            
               </div>  
             </div>
             <div className='room-info box'>
@@ -59,11 +66,12 @@ class Homepage extends React.Component {
             </div>
           </div>
           <div className='editor-panel'>
-            <Route path='/home/rooms/:roomid' render={p=>{return(<Room user={this.props.user} {...p} socket={socket} />)}} />
+            <Route exact path='/home' render={p => { return(<RoomForm socket={socket}/>)}} />
+            <Route exact path='/home/rooms/:roomid' render={p => { return(<Room user={this.props.user} {...p} socket={socket} roomid={p.match.params.roomid}/>)}} />
           </div>
           <div className='right-panel'>
             <div className='chat-container box'>
-              <ChatContainer user={this.props.user} socket={socket}/>
+              <ChatContainer user={this.props.user} socket={socket} />
               <div className='chat-info' >
                 <h2>Chat</h2>
               </div>

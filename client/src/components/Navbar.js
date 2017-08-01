@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 
 
 const Navbar = ({rooms}) =>  {
-  console.log(rooms)
   return ( 
     <div className='nav-scroll'>
         {rooms.map(room =>

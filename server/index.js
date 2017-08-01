@@ -111,7 +111,7 @@ function addUserToRoom(user, roomid) {
 
 function removeUserFromRoom(user, roomid) {
   Room.findOne({_id: roomid}, (err, room) => {
-    if(err) return handleError(err, 'REMOVE_USER_FROM_ROOM')
+    if(err || !user) return handleError(err, 'REMOVE_USER_FROM_ROOM')
     user.markModified('user')
     room.users.pull(user)
     room.save()
@@ -126,7 +126,6 @@ function sendRoom(room) {
 function findAndSendRoom(roomid) {
   Room.findOne({_id: roomid}, (err, room) => {
     if(err) return handleError(err, 'FIND_AND_SEND_ROOM')
-    console.log(room)
     sendRoom(room)
  })
 }
@@ -161,13 +160,12 @@ function codeUpdate(data, socket) {
 
 function setColor(roomid, color, socket) {
   console.log(roomid, color, socket.id)
-  Room.update(
-    {_id: roomid, 'users.socketID': socket.id}, 
-    {'$set': {
-        'users.$.color': color         
-    }},
-    function(err, numAffected) {
-      console.log(numAffected)
+  Room.findOneAndUpdate(
+    {'_id': roomid, 'users.socketID': socket.id}, 
+    {'$set': { 'users.$.color': color }}, 
+    {new: true},
+    function(err, room) {
+      console.log('UPDATE ROOM:', room)
       if(err) return handleError(err, 'SET_COLOR')
       findAndSendRoom(roomid)
   })

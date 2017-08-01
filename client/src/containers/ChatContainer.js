@@ -14,7 +14,6 @@ class ChatContainer extends React.Component {
 
   componentWillMount() {
     this.props.socket.on('chat', (mes) => this.setState({messages: [...this.state.messages, mes]}))
-    this.props.socket.on('chat', (mes) => console.log(mes))
   }
 
   render () {
@@ -29,7 +28,6 @@ class ChatContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     room: state.room,
     user: state.user,

@@ -11,7 +11,6 @@ class ChatForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log(this.props.color)
     const data = {
             room: this.props.roomid,      
             message: { 
@@ -20,7 +19,6 @@ class ChatForm extends React.Component {
               color: this.props.color
             }
           }
-    console.log(data)
     this.props.socket.emit('chat', data)
     this.setState({message: ''})
   }
