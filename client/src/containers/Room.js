@@ -20,9 +20,11 @@ class Room extends React.Component {
   componentDidMount() {
     this.props.socket.emit('joinRoom', this.props.match.params.roomid )
     this.props.socket.on('sendRoom', (room) => {
+      console.log('INCOMING: ', room)
       this.props.setRoom(room)
-      this.setState({room: room}, this.generateColor.bind(this))
+      this.setState({room: room})
     })
+    setTimeout(this.generateColor.bind(this), 2000)
   }
 
   componentWillUnmount() {
@@ -44,10 +46,13 @@ class Room extends React.Component {
     if(this.state.room.users){
       peopleList = this.state.room.users.map(p => {
         if(p){
-          return <li key={p._id}>{p.username}</li>
+          p.color = p.color || '#FF0000'
+          console.log(p.color)
+          return <li key={p._id} style={{'color':`${p.color}`}}>{p.username}</li>
         }
       })
     }
+
     return (
       <div>
         <Delay wait={1000}>

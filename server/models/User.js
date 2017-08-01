@@ -4,8 +4,7 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
   username: String,
   _id: String,
-  socketID: String,
-  color: String
+  socketID: String
 })
 
 module.exports = mongoose.model('User', userSchema, 'user')

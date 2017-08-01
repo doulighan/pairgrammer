@@ -29,9 +29,9 @@ io.on('connection', (socket) => {
     joinRoom(id, socket)
   })
 
-  // socket.on('setColor', (data) => {
-  //   setColor(data.roomid, data.color, socket)
-  // })
+  socket.on('setColor', (data) => {
+    setColor(data.roomid, data.color, socket)
+  })
 
   socket.on('leaveRoom', (roomid) => {
     leaveRoom(roomid, socket)
@@ -66,6 +66,7 @@ function chat(data, socket) {
     color: data.message.color
   })
   Room.findOne({_id: data.room}, (err, room) => {
+    if (err) return handleError(err, 'CHAT:')
     message.markModified('message')
     room.messages.push(message)
     room.save()
@@ -76,7 +77,7 @@ function chat(data, socket) {
 function addPerson(data, socket) {
   var user = new User({username: data.username, _id: data.id, socketID: socket.id})
   user.save((err) => {
-    if(err) return (err) => console.log(error)
+    if (err) return handleError(err, 'ADD_PERSON:')
     console.log('user saved!')
   })
 }
@@ -84,7 +85,7 @@ function addPerson(data, socket) {
 function makeRoom(data, socket) {
   var room = new Room({name: data.name, _id: data.id, code: '', users: []})
   room.save((err) => {
-    if(err) return handleError(err)
+    if(err) return handleError(err, 'MAKE_ROOM')
     console.log('room saved!')
     sendRooms()
   })
@@ -92,12 +93,14 @@ function makeRoom(data, socket) {
 
 function sendRooms() {
   Room.find({}, (err, res) => {
+    if(err) return handleError(err, 'SEND_ROOM')
     io.sockets.emit('requestRooms', res)
   })
 }
 
 function addUserToRoom(user, roomid) {
   Room.findOne({_id: roomid}, (err, room) => {
+    if(err) return handleError(err, 'ADD_USER_TO_ROOM')
     if(user == null || room == null) {return 'null room/user'}
     user.markModified('user')
     room.users.push(user)
@@ -108,6 +111,7 @@ function addUserToRoom(user, roomid) {
 
 function removeUserFromRoom(user, roomid) {
   Room.findOne({_id: roomid}, (err, room) => {
+    if(err) return handleError(err, 'REMOVE_USER_FROM_ROOM')
     user.markModified('user')
     room.users.pull(user)
     room.save()
@@ -119,9 +123,18 @@ function sendRoom(room) {
   io.sockets.in(room._id).emit('sendRoom', room)
 }
 
+function findAndSendRoom(roomid) {
+  Room.findOne({_id: roomid}, (err, room) => {
+    if(err) return handleError(err, 'FIND_AND_SEND_ROOM')
+    console.log(room)
+    sendRoom(room)
+ })
+}
+
 function joinRoom(id, socket) {
   console.log('joined room')
   User.findOne({socketID: socket.id}, (err, res) => {
+    if(err) return handleError(err, 'JOIN_ROOM')
     addUserToRoom(res, id)
   })
   socket.join(id)
@@ -130,6 +143,7 @@ function joinRoom(id, socket) {
 function leaveRoom(roomid, socket) {
   console.log(socket.id, 'left room')
   User.findOne({socketID: socket.id}, (err, user) => {
+    if(err) return handleError(err, 'LEAVE_ROOM')
     removeUserFromRoom(user, roomid)
   })
   socket.leave(roomid)
@@ -138,6 +152,7 @@ function leaveRoom(roomid, socket) {
 function codeUpdate(data, socket) {
   console.log('data in:', data)
   Room.findOne({_id: data.id}, (err, room) => {
+    if(err) return handleError(err, 'CODE_UPDATE')
     room.code = data.code
     room.save()
     io.sockets.to(room._id).emit('codeUpdate', room.code)
@@ -145,20 +160,24 @@ function codeUpdate(data, socket) {
 }
 
 function setColor(roomid, color, socket) {
-  User.findOne({socketID: socket.id}, (err, user) => {
-    setColorRoom(roomid, user, color)
+  console.log(roomid, color, socket.id)
+  Room.update(
+    {_id: roomid, 'users.socketID': socket.id}, 
+    {'$set': {
+        'users.$.color': color         
+    }},
+    function(err, numAffected) {
+      console.log(numAffected)
+      if(err) return handleError(err, 'SET_COLOR')
+      findAndSendRoom(roomid)
   })
 }
 
-function setColorRoom(roomid, user, color) {
-    Room.findOne({_id: roomid}, (err, room) => {
-      if(user == null || room == null) {return 'null room/user'}
-      user.markModified('user')
-      room.users.push(user)
-      room.save()
-      sendRoom(room)
-    })
-  }
+
+
+function handleError(err) {
+  console.log('Error!:', err)
+}
 
 
 
