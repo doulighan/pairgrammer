@@ -23,11 +23,11 @@ class Login extends React.Component {
     e.preventDefault()
     if(this.state.roomName === '' || this.state.roomName === ' ' ) 
       return window.alert('Please enter a name!')
-
+    const mode = (this.state.mode === '') ? 'javascript' : this.state.mode
     const room = {
       name: this.state.roomName,
       id: uuid(),
-      mode: this.state.mode, 
+      mode: mode, 
       code: '',
       password: this.state.password
     }
@@ -49,21 +49,35 @@ class Login extends React.Component {
   }
 
   handleModeChange(e) {
-    console.log('modechange')
+    this.setState({
+      mode: e.target.value
+    })
   }
 
 
   render () {
     return (
       <div className='room-form'>
-        <form class="form-style-9">
+        <form className="form-style-9">
           <input onChange={this.handleChange.bind(this)} value={this.state.roomName} type="text" name="roomName" placeholder="Name" />  
           <input type='text' name="password" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} placeholder="Password (optional)"></input>
-           <label for="mode">Language:</label>
-          <select id="mode" name="mode">
-            <option value="australia">Australia</option>
-            <option value="canada">Canada</option>
-            <option value="usa">USA</option>
+          <select id="mode" name="mode" default='javascript' onChange={this.handleModeChange.bind(this)}>
+            <option value='javascript'>javascript</option>
+            <option value='java'>java</option>
+            <option value='python'>python</option>
+            <option value='xml'>xml</option>
+            <option value='ruby'>ruby</option>
+            <option value='sass'>sass</option>
+            <option value='markdown'>markdown</option>
+            <option value='mysql'>mysql</option>
+            <option value='json'>json</option>
+            <option value='html'>html</option>
+            <option value='handlebars'>handlebars</option>
+            <option value='golang'>golang</option>
+            <option value='csharp'>csharp</option>
+            <option value='elixir'>elixir</option>
+            <option value='typescript'>typescript</option>
+            <option value='css'>css</option>
           </select>
         <button onClick={this.submitRoom.bind(this)}>New Room</button>
       </form>

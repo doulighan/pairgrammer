@@ -8,7 +8,7 @@ const Header = ({username}) => {
     <div className='header-container' >
       <div className='header-titles'>
         <h1>PairGrammer</h1>
-        <img src={logo} style={{'width':'55px', 'height':'55px', 'margin-bottom':'8px'}}alt='pear' />
+        <img src={logo} style={{'width':'55px', 'height':'55px', 'marginBottom':'8px'}} alt='pear' />
       </div>
 
       <div className='header-actions'>
@@ -18,7 +18,7 @@ const Header = ({username}) => {
         <button className='button-wide button'> Back </button>
 
         <div className='header-username'>
-          <h4>Logged in as: {username}</h4>
+          <h3>Logged in as: {username}</h3>
         </div>
       </div>
     </div>

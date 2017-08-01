@@ -83,7 +83,7 @@ function addPerson(data, socket) {
 }
 
 function makeRoom(data, socket) {
-  var room = new Room({name: data.name, _id: data.id, code: '', users: []})
+  var room = new Room({name: data.name, _id: data.id, code: '', password: data.password, mode: data.mode, users: []})
   room.save((err) => {
     if(err) return handleError(err, 'MAKE_ROOM')
     console.log('room saved!')

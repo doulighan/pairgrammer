@@ -30,7 +30,6 @@ class Editor extends React.Component {
     this.state = {
       room: props.room,
       readOnly: false,
-      mode: props.mode,
       username: ''
     }
   }
@@ -83,9 +82,9 @@ class Editor extends React.Component {
       <div className='editor-div'>
         <AceEditor
            className='ace-editor'
-           mode={this.props.mode}
+           mode={this.state.room.mode}
            height='800px'
-           width='600px'
+           width='1100px'
            fontSize='14px'
            theme='monokai'
            ref="ace"

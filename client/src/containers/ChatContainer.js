@@ -16,12 +16,29 @@ class ChatContainer extends React.Component {
     this.props.socket.on('chat', (mes) => this.setState({messages: [...this.state.messages, mes]}))
   }
 
+  hasRoomAndPermitted() {
+    return (this.props.room.length > 0 && this.props.permitted)
+  }
+
+  chat() {
+    if(this.hasRoomAndPermitted) {
+      return (
+        <div>
+          <ChatWindow messages={this.state.messages.reverse()} />
+          <ChatForm roomid={this.props.room._id} user={this.props.user} socket={this.props.socket} color={this.props.color} />
+        </div>
+      )
+    } else {
+      return (<div>Not currently in room!</div>)
+    }   
+  }
+
   render () {
-    const chatForm = (this.props.room) ?  <ChatForm roomid={this.props.room._id} user={this.props.user} socket={this.props.socket} color={this.props.color} /> : <div>not in room</div>
+    console.log(this.props.room, this.props.permitted)
+    const chat = this.chat()
     return (
       <div>
-        <ChatWindow messages={this.state.messages.reverse()} />
-        {chatForm}
+        {chat}
       </div>
     )
   }
@@ -31,7 +48,8 @@ function mapStateToProps(state) {
   return {
     room: state.room,
     user: state.user,
-    color: state.color
+    color: state.color,
+    permitted: state.permitted
   }
 }
 

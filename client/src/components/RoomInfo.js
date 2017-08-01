@@ -14,7 +14,7 @@ const RoomInfo = ({room}, {user}) => {
   return (
     <div>
       <div className='room-info-header'>
-       <h2>Room: {room.name}</h2>
+       <h2>{room.name}  ({room.mode})</h2>
       </div>
       <div className='room-info-text'>
           {users}
