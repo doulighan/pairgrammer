@@ -17,8 +17,16 @@ io.on('connection', (socket) => {
   })
 
   socket.on('disconnect', () => {
-    console.log('disconnect')
     console.log('usersocket left: ', socket.id)
+    User.findOne({socketID: socket.id}, (err, user) => {
+      if(err || user == null) return handleError(err, 'REMOVING_USER')
+      Room.find({}, (err, rooms) => {
+        if(err) return handleError(err, 'DISCONNECT')
+        rooms.forEach((room, idx) => {
+          removeUserFromRoom(user, room._id)
+        })
+      })
+    })   
   })
 
   socket.on('makeRoom', (data) => {
