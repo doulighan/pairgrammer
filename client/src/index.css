@@ -51,7 +51,8 @@ html, body {
   padding-right:1.5em;
   padding-left:1.5em;
   float: right;
-  margin-right:40px;
+  margin-right:8px;
+  margin-left:8px;
 }
 
 button {
@@ -296,12 +297,12 @@ button:hover {
 
 .room-form-div {
   margin:60px 350px;
-  border:6px solid #A6E22E;
+  border:6px solid #111;
 }
 
 .room-form-div h2 {
   text-align: center;
-  color:#A6E22E;
+  color:#fff;
 }
 
 .form {
@@ -389,6 +390,23 @@ button:hover {
   padding:10px;
   border:0px; 
 }
+
+.chat-error {
+  text-align:center;
+}
+
+.chat-error h3 {
+  padding-bottom:1em;
+  color:#FFF;
+}
+
+.join-room {
+  background-color:#A6E22E;
+  padding-right:1.5em;
+  padding-left:1.5em;
+  margin-left:5em;
+}
+
 
 
 

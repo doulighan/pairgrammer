@@ -15,6 +15,9 @@ const Header = ({username}) => {
         <Link to={'/home'}>
           <button className='button-wide button'> Home </button>
         </Link>
+        <Link to={'/'}>
+          <button className='button-wide button'> Logout </button>
+        </Link>
         <div className='header-username'>
           <h3>Logged in as: {username}</h3>
         </div>

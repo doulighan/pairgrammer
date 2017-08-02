@@ -108,12 +108,15 @@ class Room extends React.Component {
   loading() {
     if(!this.props.permitted){
       return (
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type='password' name='pass' 
-              value={this.state.pass} placeholder='Enter password...'
-              onChange={this.handlePassChange.bind(this)} />
-          <button type='submit' className='button button-wide'>Submit</button>
-        </form>
+        <div className='room-form-div box' style={{textAlign:'center'}}>
+          <h2 style={{color:'#fff'}}>Enter Password for: {this.state.room.name}</h2>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <input type='password' name='pass' 
+                value={this.state.pass} placeholder='Enter password...' className='textbox'
+                onChange={this.handlePassChange.bind(this)} />
+            <button type='submit' className='button join-room'>Submit</button>
+          </form>
+        </div>
         )
       } 
       else {
@@ -123,12 +126,11 @@ class Room extends React.Component {
 
 
   render() {
+    const display = this.loading()
     return (
-      <div>
-        <Delay wait={500}>
-          {this.editor()}
-        </Delay>
-      </div>
+      <Delay wait={500}>
+        {display}
+      </Delay>
     )
   }
 }

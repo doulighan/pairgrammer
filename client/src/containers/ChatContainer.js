@@ -29,12 +29,8 @@ class ChatContainer extends React.Component {
     })
   }
 
-  hasRoomAndPermitted() {
-    return (this.props.room._id && this.props.permitted)
-  }
-
   chat() {
-    if(this.hasRoomAndPermitted && this.props.room) {
+    if(this.props.room && this.props.permitted) {
       return (
         <div>
           <ChatWindow messages={this.state.messages.reverse()} />
@@ -42,7 +38,14 @@ class ChatContainer extends React.Component {
         </div>
       )
     } else {
-      return (<div>Not currently in room!</div>)
+      return (
+        <div>
+          <ChatWindow messages={null} />
+          <div className='chat-error'>
+            <h3>Join a room to chat!</h3>
+          </div>
+        </div>
+      )
     }   
   }
 

@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Route, Switch } from 'react-router-dom'
+import { setRoom } from '../actions/rooms'
+import { setPermitted } from '../actions/permission'
 import { loadRooms } from '../actions/rooms'
 import Room from './Room'
 import Navbar from '../components/Navbar'
@@ -38,17 +40,22 @@ class Homepage extends React.Component {
   //<RoomForm socket={socket} />
   render () {
     
-    if(!this.props.user.username) {this.props.history.push('/login')}
+    if(!this.props.user.username) {this.props.history.push('/')}
     var navbar = (this.state.rooms) ? <Navbar rooms={this.state.rooms} /> : <div/>
     var roomInfo = (this.props.room) ? <RoomInfo room={this.props.room} user={this.props.user} /> : <div>Not in room</div>
 
     if(this.props.location.pathname === '/home') {
+      this.props.setPermitted(false)
+     }
+     if(!this.props.permitted && this.props.location.pathname === '/home') {
+      this.props.setRoom(null)
       roomInfo = <div className='welcome-info'>
                   <h2>Welcome to Pairgrammer!</h2>
                   <h3>Join an open room below, or create a new room</h3>
                  </div>
-
     }
+
+
     return (
       <div>
         <Header username={this.props.user.username} /> 
@@ -83,14 +90,24 @@ class Homepage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Homepage)
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage)
 
 
 function mapStateToProps(state) {
   return {
     user: state.user,  
-    room: state.room  
+    room: state.room,
+    permitted: state.permitted  
   }
+}
+
+function mapDispatchToProps(dispatch) {
+  return (
+    bindActionCreators({
+      setRoom: setRoom, 
+      setPermitted: setPermitted
+    }, dispatch)
+  )
 }
 
 
