@@ -17,6 +17,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('disconnect', () => {
+    console.log('disconnect')
     console.log('usersocket left: ', socket.id)
   })
 
@@ -34,6 +35,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('leaveRoom', (roomid) => {
+    console.log('leaveRoom')
     leaveRoom(roomid, socket)
   })
 
@@ -140,12 +142,12 @@ function joinRoom(id, socket) {
 }
 
 function leaveRoom(roomid, socket) {
+  socket.leave(roomid)
   console.log(socket.id, 'left room')
   User.findOne({socketID: socket.id}, (err, user) => {
     if(err) return handleError(err, 'LEAVE_ROOM')
     removeUserFromRoom(user, roomid)
   })
-  socket.leave(roomid)
 }
 
 function codeUpdate(data, socket) {

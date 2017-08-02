@@ -12,16 +12,29 @@ class ChatContainer extends React.Component {
     }
   }
 
+  compare(a,b) {
+    if(a.time > b.time) 
+      return 1
+    if(a.time < b.time) 
+      return -1
+    return 0
+  }
+
   componentWillMount() {
-    this.props.socket.on('chat', (mes) => this.setState({messages: [...this.state.messages, mes]}))
+    this.props.socket.on('chat', (mes) => {
+      const messages = [...this.state.messages, mes].sort(this.compare)
+      this.setState({
+        messages: messages
+      })
+    })
   }
 
   hasRoomAndPermitted() {
-    return (this.props.room.length > 0 && this.props.permitted)
+    return (this.props.room._id && this.props.permitted)
   }
 
   chat() {
-    if(this.hasRoomAndPermitted) {
+    if(this.hasRoomAndPermitted && this.props.room) {
       return (
         <div>
           <ChatWindow messages={this.state.messages.reverse()} />
@@ -34,7 +47,7 @@ class ChatContainer extends React.Component {
   }
 
   render () {
-    console.log(this.props.room, this.props.permitted)
+    console.log(this.props.color)
     const chat = this.chat()
     return (
       <div>

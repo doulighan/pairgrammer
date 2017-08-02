@@ -17,7 +17,6 @@ class Room extends React.Component {
       pass: '',
     }
     this.colors = ['#66D9EF', '#F92672', '#A6E22E', '#FD971F']
-    this.classNames = ['editor-animate-div']
   }
 
   handlePassChange(e) {
@@ -38,6 +37,11 @@ class Room extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.roomid !== this.props.match.params.roomid) {
+      this.setState({room: {}, pass: ''})
+      this.props.setRoom(null)
+      this.props.setColor(null)
+      this.props.setPermitted(false)
+      this.props.socket.emit('leaveRoom', this.props.match.params.roomid)
       this.initialize(nextProps.match.params.roomid)
     }
   }
@@ -50,6 +54,7 @@ class Room extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    
     if(nextState.room._id !== this.state.room._id) {
       this.props.setPermitted(false)
     }
@@ -65,8 +70,8 @@ class Room extends React.Component {
       console.log('INCOMING: ', room)
       this.props.setRoom(room)
       this.setState({room: room})
-    }, this.forceUpdate())
-    setTimeout(this.generateColor.bind(this), 250)
+    }, setTimeout(this.generateColor.bind(this), 250)
+    )
   }
   
   componentDidMount() {
@@ -121,7 +126,7 @@ class Room extends React.Component {
     return (
       <div>
         <Delay wait={500}>
-          {this.loading()}
+          {this.editor()}
         </Delay>
       </div>
     )

@@ -229,6 +229,7 @@ button:hover {
 
 
 .comment {
+  max-width:22em;
   word-wrap: break-word;
   margin-top:.5em;
 }
