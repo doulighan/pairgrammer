@@ -1,14 +1,12 @@
 import React from 'react'
-import { Message, Icon } from 'semantic-ui-react'
 
-const TypeMessage = ({username}) => (
-  <Message icon>
-    <Icon name='spinner notched' loading />
-    <Message.Content>
-      <Message.Header>One second</Message.Header>
-      {username} is currently typing...
-    </Message.Content>
-  </Message>
-)
+const TypeMessage = ({user}) => {
+  console.log(user.color)
+  return (
+    <div className='typingmessage' style={{'backgroundColor':`${user.color}`}}>
+      <h2>{user.name} is currently typing...</h2>
+    </div>
+  )
+}
 
 export default TypeMessage

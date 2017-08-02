@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {connect} from 'react-redux'
 import brace from 'brace'
 import AceEditor from 'react-ace'
 import TypeMessage from '../components/TypeMessage'
@@ -43,7 +44,8 @@ class Editor extends React.Component {
       user: {
         name: this.props.user.username,
         id: this.props.user.id,
-        cursor: this.props.cursor
+        cursor: this.props.cursor,
+        color: this.props.color
       }
     })
   }
@@ -67,8 +69,9 @@ class Editor extends React.Component {
   }
 
   blockInput(user) {
+    if(this.state.readOnly) return
     console.log(user.name, 'is typing...')
-    this.setState({readOnly: true, username: user.name})
+    this.setState({readOnly: true, user: user})
 
     setTimeout(() => {
       this.setState({readOnly: false})
@@ -77,7 +80,7 @@ class Editor extends React.Component {
 
   render () {
     const options = { lineNumbers: true, mode: this.state.mode, readOnly: this.state.readOnly }
-    const typingMessage = (this.state.readOnly) ? <TypeMessage username={this.state.username} /> : <p></p>
+    const typingMessage = (this.state.readOnly) ? <TypeMessage user={this.state.user} /> : <p></p>
     return (  
       <div className='editor-div'>
         <AceEditor
@@ -99,4 +102,14 @@ class Editor extends React.Component {
   }
 }
 
-export default Editor
+function mapStateToProps(state) {
+  return {
+    room: state.room,
+    user: state.user,
+    color: state.color,
+    permitted: state.permitted
+  }
+}
+
+
+export default connect(mapStateToProps, null)(Editor)

@@ -57,11 +57,13 @@ class Login extends React.Component {
 
   render () {
     return (
-      <div className='room-form'>
-        <form className="form-style-9">
-          <input onChange={this.handleChange.bind(this)} value={this.state.roomName} type="text" name="roomName" placeholder="Name" />  
-          <input type='text' name="password" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} placeholder="Password (optional)"></input>
-          <select id="mode" name="mode" default='javascript' onChange={this.handleModeChange.bind(this)}>
+      <div className='room-form-div box'>
+        <h2>New Room</h2>
+        <form className="form">
+          <input onChange={this.handleChange.bind(this)} value={this.state.roomName} type="text" name="roomName" placeholder="Name" className='textbox'/>  
+          <input type='text' name="password" onChange={this.handlePasswordChange.bind(this)} value={this.state.password} placeholder="Password (optional)" className='textbox'></input>
+          <label>Language:</label>
+          <select id="mode" name="mode" default='javascript' onChange={this.handleModeChange.bind(this)} className='select'>
             <option value='javascript'>javascript</option>
             <option value='java'>java</option>
             <option value='python'>python</option>
@@ -79,7 +81,9 @@ class Login extends React.Component {
             <option value='typescript'>typescript</option>
             <option value='css'>css</option>
           </select>
-        <button onClick={this.submitRoom.bind(this)}>New Room</button>
+        <div>
+          <button className='newroom button' onClick={this.submitRoom.bind(this)}>New Room</button>
+        </div>
       </form>
     </div>
     )
