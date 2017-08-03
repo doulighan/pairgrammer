@@ -1,4 +1,4 @@
-import React from 'react'  
+  import React from 'react'  
 import {connect} from 'react-redux'  
 import {bindActionCreators} from 'redux'
 import { setRoom } from '../actions/rooms'
@@ -38,7 +38,6 @@ class Room extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.roomid !== this.props.match.params.roomid) {
       this.setState({room: {}, pass: ''})
-      this.props.setRoom(null)
       this.props.setColor(null)
       this.props.setPermitted(false)
       this.props.socket.emit('leaveRoom', this.props.match.params.roomid)

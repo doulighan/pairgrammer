@@ -11,6 +11,11 @@ class ChatForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    const mess = this.state.message.replace(/^\s+/, '').replace(/\s+$/, '')
+    if(mess === '') {
+      this.setState({message: ''})
+      return
+    }
     const data = {
             room: this.props.roomid,      
             message: { 
@@ -19,9 +24,11 @@ class ChatForm extends React.Component {
               color: this.props.color
             }
           }
+    
     this.props.socket.emit('chat', data)
     this.setState({message: ''})
   }
+
 
   handleChange(e) {
     this.setState({

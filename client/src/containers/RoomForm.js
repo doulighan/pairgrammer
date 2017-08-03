@@ -21,18 +21,27 @@ class Login extends React.Component {
 
   submitRoom(e) {
     e.preventDefault()
-    if(this.state.roomName === '' || this.state.roomName === ' ' ) 
-      return window.alert('Please enter a name!')
+    const input = this.state.roomName.replace(/^\s+/, '').replace(/\s+$/, '')
+    if(input === ''){ 
+      window.alert('Please enter a name!')
+      this.setState({roomName: ''})
+      return 
+    }
+    if(this.state.roomName.length > 26){
+      window.alert('Please enter a name shorter than 25 characters')
+      this.setState({roomName: ''})
+      return
+    }
     const mode = (this.state.mode === '') ? 'javascript' : this.state.mode
-    const room = {
+    const rom = {
       name: this.state.roomName,
       id: uuid(),
       mode: mode, 
       code: '',
       password: this.state.password
     }
-    this.props.createRoom(room)
-    this.props.socket.emit('makeRoom', room)
+    this.props.createRoom(rom)
+    this.props.socket.emit('makeRoom', rom)
     this.setState({roomName: '', password: '', mode: '', proceed: true})
   }
 

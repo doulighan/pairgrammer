@@ -1,6 +1,3 @@
-/*::-webkit-scrollbar {
-  background:#555;
-}*/
 
 html, body {
   margin: 0;
@@ -123,7 +120,7 @@ button:hover {
 }
 
 .nav-scroll {
-  flex:4;
+  flex:3.5;
   align-items: stretch;
   overflow-y: auto;
 }
@@ -150,6 +147,10 @@ button:hover {
   margin-top: .5em;
   text-align:center;
   color:#66D9EF
+}
+
+.nav-info h2 {
+  margin-top:.5rem;
 }
 
 .room-info {
@@ -317,6 +318,11 @@ button:hover {
 
 .textbox {
   margin:10px;
+  padding:5px;
+  border:0px;
+}
+
+.filterbox {
   padding:5px;
   border:0px;
 }

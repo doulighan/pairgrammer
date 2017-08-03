@@ -21,6 +21,7 @@ class Homepage extends React.Component {
     super()
     this.state = {
       rooms: [],
+      search: '',
       user: {}
     }
   }
@@ -37,24 +38,32 @@ class Homepage extends React.Component {
     socket.emit('addPerson', this.props.user)
   }
 
-  //<RoomForm socket={socket} />
+  handleSearchChange(e) {
+    this.setState({search: e.target.value})
+  }
+
+  filter(search) {
+    return this.state.rooms.filter(r => 
+        r.name.toLowerCase().includes(search.toLowerCase()))
+  }
+
   render () {
+
+    const rooms = (this.state.search !== '') ? this.filter(this.state.search) : this.state.rooms
     
     if(!this.props.user.username) {this.props.history.push('/')}
-    var navbar = (this.state.rooms) ? <Navbar rooms={this.state.rooms} /> : <div/>
+    var navbar = (this.state.rooms) ? <Navbar rooms={rooms} /> : <div/>
     var roomInfo = (this.props.room) ? <RoomInfo room={this.props.room} user={this.props.user} /> : <div>Not in room</div>
 
     if(this.props.location.pathname === '/home') {
       this.props.setPermitted(false)
      }
      if(!this.props.permitted && this.props.location.pathname === '/home') {
-      this.props.setRoom(null)
       roomInfo = <div className='welcome-info'>
                   <h2>Welcome to Pairgrammer!</h2>
                   <h3>Join an open room below, or create a new room</h3>
                  </div>
     }
-
 
     return (
       <div>
@@ -65,6 +74,7 @@ class Homepage extends React.Component {
             <div className='navbar-container box'>
               {navbar}
               <div className='nav-info'>
+                <input type='text' placeholder='Search' onChange={this.handleSearchChange.bind(this)} value={this.state.search} className='filterbox'/>
                 <h2>Rooms</h2>            
               </div>  
             </div>

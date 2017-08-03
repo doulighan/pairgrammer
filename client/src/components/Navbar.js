@@ -2,9 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 
-
-const Navbar = ({rooms}) =>  {
-  return ( 
+const Navbar = ({rooms}) => {
+  return (
     <div className='nav-scroll'>
         {rooms.map(room =>
           <div className='nav-item'>

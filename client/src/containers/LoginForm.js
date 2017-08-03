@@ -17,7 +17,18 @@ class Login extends React.Component {
 
   submitUser(e) {
     e.preventDefault()
-    if(this.state.username === '' || this.state.username === ' ' ) return 
+    const username = this.state.username.replace(/^\s+/, '').replace(/\s+$/, '')
+    if(username === '') {
+      window.alert('Please enter a username') 
+      this.setState({username: ''})
+      return
+    }
+    if(this.state.username.length > 26){
+      window.alert('Please enter a username shorter than 25 characters')
+      this.setState({username: ''})
+      return 
+    }
+
     this.props.setUser(this.state.username)
     this.setState({username: ''})
     this.props.history.push('/home')
