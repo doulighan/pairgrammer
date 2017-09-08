@@ -62,9 +62,10 @@ io.on('connection', (socket) => {
 
 })
 
-mongoose.connect('mongodb://localhost/db')
+// mongoose.connect('mongodb://localhost/db')
+mongoose.connect('mongodb://heroku_7c29jn2n:2qmoojefhf5m8nknbbint0is84@ds127564.mlab.com:27564/heroku_7c29jn2n')
 
-http.listen(3000, function(){
+http.listen(process.env.PORT || 3000, function() {
   console.log('listening on *:3000')
 })
 

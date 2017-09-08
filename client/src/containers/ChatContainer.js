@@ -50,7 +50,6 @@ class ChatContainer extends React.Component {
   }
 
   render () {
-    console.log(this.props.color)
     const chat = this.chat()
     return (
       <div>

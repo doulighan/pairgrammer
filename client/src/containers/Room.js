@@ -6,8 +6,7 @@ import { setColor } from '../actions/colors'
 import { setPermitted } from '../actions/permission'
 import Editor from './Editor'
 import Delay from 'react-delay'
-import ChatContainer from './ChatContainer'
-import {Grid, Segment, Sidebar, Menu} from 'semantic-ui-react' 
+import ChatContainer from './ChatContainer' 
 
 class Room extends React.Component {  
   constructor() {
@@ -66,7 +65,6 @@ class Room extends React.Component {
   initialize(roomid) {
     this.props.socket.emit('joinRoom', roomid )
     this.props.socket.on('sendRoom', (room) => {
-      console.log('INCOMING: ', room)
       this.props.setRoom(room)
       this.setState({room: room})
     }, setTimeout(this.generateColor.bind(this), 250)
@@ -82,7 +80,6 @@ class Room extends React.Component {
   }
 
   generateColor() {
-    console.log('GEN COLOR')
     if(!this.state.room.users) return
     let color = this.colors[(this.state.room.users.length-1) % 4]
     this.props.setColor(color)

@@ -52,7 +52,6 @@ class Editor extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.room._id !== this.props.room.id) {
-      console.log('Room next:', nextProps.room.name, "Room this:", this.state.room.name)
       this.setState({room: nextProps.room})
     }
   }
@@ -70,7 +69,6 @@ class Editor extends React.Component {
 
   blockInput(user) {
     if(this.state.readOnly) return
-    console.log(user.name, 'is typing...')
     this.setState({readOnly: true, user: user})
 
     setTimeout(() => {
@@ -79,26 +77,32 @@ class Editor extends React.Component {
   }
 
   render () {
+    const debug = false
+
     const options = { lineNumbers: true, mode: this.state.mode, readOnly: this.state.readOnly }
     const typingMessage = (this.state.readOnly) ? <TypeMessage user={this.state.user} /> : <p></p>
-    return (  
-      <div className='editor-div'>
-        <AceEditor
-           className='ace-editor'
-           mode={this.state.room.mode}
-           height='800px'
-           width='1100px'
-           fontSize='14px'
-           theme='monokai'
-           ref="ace"
-           onChange={this.handleChange}
-           value={this.state.room.code}
-           name="UNIQUE_ID_OF_DIV"
-           editorProps={{$blockScrolling: true}}
-         />
-        {typingMessage}
-    </div>
-    )
+
+    if(debug) {
+      return (<div className='debug'>DEBUG</div>)
+    } else {
+        return ( 
+          <div className='editor-div'>
+            <AceEditor
+               className='ace-editor'
+               mode={this.state.room.mode}
+               height='800px'
+               width='1100px'
+               fontSize='14px'
+               theme='monokai'
+               ref="ace"
+               onChange={this.handleChange}
+               value={this.state.room.code}
+               name="UNIQUE_ID_OF_DIV"
+               editorProps={{$blockScrolling: true}}
+             />
+            {typingMessage}
+        </div>
+        )}
   }
 }
 

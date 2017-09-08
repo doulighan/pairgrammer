@@ -14,7 +14,7 @@ import Delay from 'react-delay'
 import io from 'socket.io-client'
 import RoomInfo from '../components/RoomInfo'
 
-const socket = io('http://192.168.6.80:3000')
+const socket = io('http://192.168.6.213:3000')
 
 class Homepage extends React.Component {
   constructor() {

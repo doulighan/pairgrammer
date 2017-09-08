@@ -1,5 +1,4 @@
 import React from 'react'
-import { Form, Input, Button } from 'semantic-ui-react'
 
 class ChatForm extends React.Component {
   constructor() {

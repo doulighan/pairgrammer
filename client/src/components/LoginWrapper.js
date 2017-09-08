@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import {Route, Switch} from 'react-router-dom'
 import LoginSignup from './LoginSignup'
 import LoginForm from '../containers/LoginForm'
-import { Header, Icon, Image, Segment, Button, Divider } from 'semantic-ui-react'
 
 const LoginWrapper = () => {
   return (
